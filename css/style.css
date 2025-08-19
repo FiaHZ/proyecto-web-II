@@ -1,52 +1,153 @@
 @import url("https://fonts.googleapis.com/css2?family=Mulish&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Rubik:ital,wght@0,300..900;1,300..900&family=Slabo+27px&display=swap");
 
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: "Nunito", sans-serif;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
 }
 
 /* ---------NAVBAR--------- */
-.header{
-    background-color: #02050E;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 85px;
-    padding: 5px 10%;
+.header {
+  background-color: #02050e;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 85px;
+  padding: 5px 10%;
 }
-.header .logo{
-    cursor: pointer;
+.header .logo {
+  cursor: pointer;
 }
-.header .logo img{
-    height: 115px;
-    width: auto;
-    transition: all 0.3s;
-}
-
-.header .logo img:hover{
-    transform:  scale(1.1);
+.header .logo img {
+  height: 115px;
+  width: auto;
+  transition: all 0.3s;
 }
 
-.header .nav-links{
-    list-style: none;
+.header .logo img:hover {
+  transform: scale(1.1);
 }
 
-.header .nav-links li{
-    display: inline-block;
-    padding: 2px;
-}
-.header .nav-links a{
-    transition: color 0.3s ease;
-    text-decoration: none;
-    font: 700;
-    color: #EFB820;
-    font-weight: 700;
-    font-style: italic;
+.header .nav-links {
+  list-style: none;
 }
 
-.header .nav-links a:hover{
-    color: #E4E4E4;
+.header .nav-links li {
+  display: inline-block;
+  padding: 2px;
+}
+.header .nav-links a {
+  transition: color 0.3s ease;
+  text-decoration: none;
+  font: 700;
+  color: #efb820;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.header .nav-links a:hover {
+  color: #e4e4e4;
 }
 /* --------FIN DE NAVBAR--------- */
+
+/* --------Imagen de Encabezado--------- */
+.img-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.img-header img {
+  width: 100%;
+  max-height: 700px; 
+  object-fit: cover; 
+  display: block;
+}
+/* --------Fin Imagen de Encabezado--------- */
+
+/* ---- Texto con fondo negro ---- */
+.text-banner {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 20px 40px;
+  text-align: center;
+  cursor: default;
+}
+
+.text-banner h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-weight: 400;
+  font-style: italic
+}
+
+.text-banner p {
+  font-size: 1.2rem;
+}
+
+/* ---- Seccion 2 Quienes Somos ---- */
+.quienes-somos {
+  padding: 20px;
+  background-color: #E4E4E4;
+}
+
+.quienes-somos h1 {
+  text-align: center;    
+  margin-bottom: 30px;  
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #150D3E;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.quienes-somos .contenido-quienes-somos {
+  display: flex;         
+  align-items: flex-start;
+  justify-content: center;
+  gap: 30px;         
+  max-width: 1150px;  /* ✅ límite general del bloque */
+  margin: 0 auto;    
+}
+
+.text-quienes-somos {
+  flex: 1;  
+  padding: 30px;  
+  font-weight: 700;
+}
+
+.img-quienes-somos {
+  width: 350px;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px black;
+}
+
+ /*----Propiedades Destacadas----*/
+ .contenido-propiedad-dest{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap
+    /*margin-top*/
+ }
+ .card-propiedad-dest{
+    width: 325px;
+    background-color: #150D3E;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+    margin: 20px;
+ }
+ .card-propiedad-dest img{
+    width: 100%;
+    height: auto;
+ }
+
+ .card-content{
+    
+ }
