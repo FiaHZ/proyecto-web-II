@@ -4,14 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Solutions Real State</title>
-    <link rel="stylesheet" href="../project-webII/css/style.css" />
     <link rel="stylesheet" href="../proyecto-web-II/css/style.css" />
   </head>
   <body>
     <!----Navbar---->
     <header class="header">
       <div class="logo">
-        <img src="../project-webII/img/logo.png" alt="logo de la empresa" />
         <img src="../proyecto-web-II/img/logo.png" alt="logo de la empresa" />
       </div>
 
@@ -28,7 +26,6 @@
 
     <!----Imagen de encabezado---->
     <div class="img-header">
-      <img src="../project-webII/img/img-1.jpg" alt="" />
       <img src="../proyecto-web-II/img/img-1.jpg" alt="" />
       <div class="text-banner">
         <h1>
@@ -48,7 +45,6 @@
         Temporibus debitis odit minus exercitationem deserunt ipsam ut, ducimus aut illum, sit error? Odio distinctio praesentium ea adipisci laboriosam eveniet deserunt minima quo, dolore saepe, ipsum libero explicabo qui commodi?</p>
       </div>
       <div>
-        <img class="img-quienes-somos" src="../project-webII/img/quienes-somos.jpg" alt="Quienes Somos">
         <img class="img-quienes-somos" src="../proyecto-web-II/img/quienes-somos.jpg" alt="Quienes Somos">
       </div>
       </div>
