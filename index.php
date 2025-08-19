@@ -49,5 +49,64 @@
       </div>
       </div>
     </section>
+    
+    <!----Propiedades Destacadas---->
+    <section class="propiedad-dest">
+      <h1>PROPIEDADES DESTACADAS</h1>
+      <div class="contenido-propiedad-dest">
+        <div class="card-propiedad-dest">
+          <img src="../img/prop-dest1.png" alt="card-propiedad" />
+          <div class="card-content">
+            <h3>Card 1</h3>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla
+              incidunt quidem ad velit dolorem ipsum, esse facere iure ipsa,
+              consequuntur dolores. Magni saepe modi doloribus nam iste eius,
+              officia expedita! Illum, ab. Ea, magnam voluptatem. Eligendi,
+              assumenda molestiae? Omnis, suscipit a voluptates culpa voluptatem
+              rerum autem eos, quaerat beatae esse saepe perspiciatis
+              <a href="#" class="btn-prop-dest">Ver Más...</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contenido-propiedad-dest">
+        <div class="card-propiedad-dest">
+          <img src="../img/prop-dest1.png" alt="card-propiedad" />
+          <div class="card-content">
+            <h3>Card 2</h3>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla
+              incidunt quidem ad velit dolorem ipsum, esse facere iure ipsa,
+              consequuntur dolores. Magni saepe modi doloribus nam iste eius,
+              officia expedita! Illum, ab. Ea, magnam voluptatem. Eligendi,
+              assumenda molestiae? Omnis, suscipit a voluptates culpa voluptatem
+              rerum autem eos, quaerat beatae esse saepe perspiciatis
+              <a href="#" class="btn-prop-dest">Ver Más...</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contenido-propiedad-dest">
+        <div class="card-propiedad-dest">
+          <img src="../img/prop-dest1.png" alt="card-propiedad" />
+          <div class="card-content">
+            <h3>Card 3</h3>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla
+              incidunt quidem ad velit dolorem ipsum, esse facere iure ipsa,
+              consequuntur dolores. Magni saepe modi doloribus nam iste eius,
+              officia expedita! Illum, ab. Ea, magnam voluptatem. Eligendi,
+              assumenda molestiae? Omnis, suscipit a voluptates culpa voluptatem
+              rerum autem eos, quaerat beatae esse saepe perspiciatis
+              <a href="#" class="btn-prop-dest">Ver Más...</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
   </body>
 </html>
