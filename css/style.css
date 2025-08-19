@@ -126,6 +126,28 @@
   margin-top: 20px;
   border-radius: 10px;
   box-shadow: 5px 5px 10px black;
-
-  
 }
+
+ /*----Propiedades Destacadas----*/
+ .contenido-propiedad-dest{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap
+    /*margin-top*/
+ }
+ .card-propiedad-dest{
+    width: 325px;
+    background-color: #150D3E;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+    margin: 20px;
+ }
+ .card-propiedad-dest img{
+    width: 100%;
+    height: auto;
+ }
+
+ .card-content{
+    
+ }
