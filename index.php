@@ -32,7 +32,7 @@
                 <label for="remember">Recuerdame</label>
             </section>
             <section>
-                <a href="#">Oolvidar Contraseña</a>
+                <a href="#">Olvidar Contraseña</a>
             </section>
         </div>
 
