@@ -59,44 +59,143 @@
   </section>
 
   <!----Propiedades Destacadas---->
-  <section class="propiedad-dest">
+  <section class="propiedad">
     <h1>PROPIEDADES DESTACADAS</h1>
 
-    <div class="contenido-propiedad-dest">
-      <div class="card-propiedad-dest">
+    <div class="contenido-propiedad">
+      <div class="card-propiedad">
         <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
         <div class="card-content">
           <h3>Card 1</h3>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
             deserunt a autem corporis dignissimos doloribus modi
-            <div class="precio-prop-dest"> Precio</div>
+          <div class="precio-prop"> Precio</div>
           </p>
         </div>
       </div>
 
-      <div class="card-propiedad-dest">
+      <div class="card-propiedad">
         <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
         <div class="card-content">
           <h3>Card 2</h3>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
             deserunt a autem corporis dignissimos doloribus modi
-           <div class="precio-prop-dest"> Precio</div>
+          <div class="precio-prop"> Precio</div>
         </div>
       </div>
 
-      <div class="card-propiedad-dest">
+      <div class="card-propiedad">
         <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
         <div class="card-content">
           <h3>Card 3</h3>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
             deserunt a autem corporis dignissimos doloribus modi
-            <div class="precio-prop-dest"> Precio</div>
+          <div class="precio-prop"> Precio</div>
           </p>
         </div>
       </div>
+
+    </div>
+    <!-- Botón Ver más -->
+    <div class="btn-vermas-container">
+      <a href="#" class="btn-vermas">Ver más</a>
+    </div>
+  </section>
+
+  <!----Propiedades Venta---->
+  <section class="propiedad-venta">
+    <h1>PROPIEDADES EN VENTA</h1>
+
+    <div class="contenido-propiedad-venta">
+      <div class="card-propiedad-venta">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content-venta">
+          <h3>Card 1</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop-venta"> Precio</div>
+          </p>
+        </div>
+      </div>
+
+      <div class="card-propiedad-venta">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content-venta">
+          <h3>Card 2</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop-venta"> Precio</div>
+        </div>
+      </div>
+
+      <div class="card-propiedad-venta">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content-venta">
+          <h3>Card 3</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop-venta"> Precio</div>
+          </p>
+        </div>
+      </div>
+
+    </div>
+    <!-- Botón Ver más -->
+    <div class="btn-vermas-container-venta">
+      <a href="#" class="btn-vermas-venta">Ver más</a>
+    </div>
+  </section>
+
+  <!----Propiedades Alquiler---->
+  <section class="propiedad-alquiler">
+    <h1>PROPIEDADES EN ALQUILER</h1>
+
+    <div class="contenido-propiedad-alquiler">
+      <div class="card-propiedad-alquiler">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content-alquiler">
+          <h3>Card 1</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop-alquiler"> Precio</div>
+          </p>
+        </div>
+      </div>
+
+      <div class="card-propiedad-alquiler">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content-alquiler">
+          <h3>Card 2</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop-alquiler"> Precio</div>
+        </div>
+      </div>
+
+      <div class="card-propiedad-alquiler">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content-alquiler">
+          <h3>Card 3</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop-alquiler"> Precio</div>
+          </p>
+        </div>
+      </div>
+
+    </div>
+    <!-- Botón Ver más -->
+    <div class="btn-vermas-container-alquiler">
+      <a href="#" class="btn-vermas-alquiler">Ver más</a>
     </div>
   </section>
 
