@@ -21,6 +21,7 @@ body{
     width: 440px;
     height: 480px;
     padding: 30px;
+    margin-top: 50px;
 }
 
 .login-header{
