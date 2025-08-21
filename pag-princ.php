@@ -1,13 +1,14 @@
 <?php
 session_start();
 if (!isset($_SESSION["usuario_id"])) {
-    header("Location: index.php");
-    exit;
+  header("Location: index.php");
+  exit;
 }
 ?>
 
-    
+
 </body>
+
 </html>
 
 <!DOCTYPE html>
@@ -17,10 +18,12 @@ if (!isset($_SESSION["usuario_id"])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Solutions Real State</title>
-  <h1>Bienvenido, <?= $_SESSION["usuario_nombre"] ?> 👋</h1>
+  <!--  <h1>Bienvenido, <?= $_SESSION["usuario_nombre"] ?> 👋</h1>
     <p>Tu rol es: <?= $_SESSION["usuario_rol"] ?></p>
-    <a href="logout.php">Cerrar Sesión</a>
+    <a href="logout.php">Cerrar Sesión</a>-->
   <link rel="stylesheet" href="../proyecto-web-II/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-pap3x...tu-integrity-hash..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -213,6 +216,76 @@ if (!isset($_SESSION["usuario_id"])) {
       <a href="#" class="btn-vermas-alquiler">Ver más</a>
     </div>
   </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <!-- Información de contacto -->
+      <div class="contact-info">
+        <div class="contact-item">
+          <div>
+            <i class="fas fa-map-marker-alt contact-icon"></i>
+            <strong>Dirección:</strong> Cañas Guanacaste, 100 mts Este
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <i class="fas fa-phone contact-icon"></i><br>
+          <div><strong>Teléfono:</strong> 8890-2030</div>
+        </div>
+
+        <div class="contact-item">
+          <i class="fas fa-envelope contact-icon"></i>
+          <div><strong>Email:</strong> info@utnrealstate.com</div>
+        </div>
+      </div>
+
+      <!-- Logo y redes sociales -->
+      <div class="center-section">
+        <div class="logo">
+          <img src="../proyecto-web-II/img/logo-black.png" alt="">
+        </div>
+
+        <div class="social-icons">
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#""><i class=" fa-brands fa-youtube"></i></a>
+          <a href="#""><i class=" fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <!-- Formulario de contacto -->
+      <div class="contact-form-section">
+        <form class="contact-form" action="enviar_formulario.php" method="POST">
+          <h3 class="form-title">Contáctanos</h3>
+
+          <div class="form-group">
+            <label class="form-label">Nombre:</label>
+            <input type="text" class="form-input" name="nombre" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email:</label>
+            <input type="email" class="form-input" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Teléfono:</label>
+            <input type="tel" class="form-input" name="telefono" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Mensaje:</label>
+            <textarea class="form-textarea" name="mensaje" required></textarea>
+          </div>
+
+          <button type="submit" class="form-submit">Enviar</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; Derechos Reservados | 2024
+    </div>
+  </footer>
 
 </body>
 
