@@ -170,13 +170,13 @@
   text-align: center;
   padding: 8px 16px;
   margin-top: 16px;
-  color: #EFB820;
+  color: #efb820;
   font-weight: 800;
   font-style: italic;
 }
 
 .propiedad {
-  background-color:#150D3E; 
+  background-color: #150d3e;
 }
 
 .propiedad h1 {
@@ -195,7 +195,7 @@
 .btn-vermas {
   display: inline-block;
   padding: 12px 30px;
-  border: 2px solid #EFB820;
+  border: 2px solid #efb820;
   color: #fff;
   font-weight: 800;
   font-style: italic;
@@ -207,7 +207,7 @@
 
 .btn-vermas:hover {
   background-color: #fff;
-  color: #150D3E;
+  color: #150d3e;
   transform: scale(1.05);
 }
 
@@ -253,13 +253,13 @@
   text-align: center;
   padding: 8px 16px;
   margin-top: 16px;
-  color: #150D3E;
+  color: #150d3e;
   font-weight: 800;
   font-style: italic;
 }
 
 .propiedad-venta {
-  background-color:#e4e4e4; 
+  background-color: #e4e4e4;
 }
 
 .propiedad-venta h1 {
@@ -278,8 +278,8 @@
 .btn-vermas-venta {
   display: inline-block;
   padding: 12px 30px;
-  border: 2px solid #EFB820;
-  color: #150D3E;
+  border: 2px solid #efb820;
+  color: #150d3e;
   font-weight: 800;
   font-style: italic;
   border-radius: 6px;
@@ -289,7 +289,7 @@
 }
 
 .btn-vermas-venta:hover {
-   background-color: #150D3E;
+  background-color: #150d3e;
   color: #fff;
   transform: scale(1.05);
 }
@@ -305,7 +305,7 @@
 .card-propiedad-alquiler {
   width: 250px;
   min-width: 280px;
-  background-color: #150D3E;
+  background-color: #150d3e;
   overflow: hidden;
   margin: 10px;
 }
@@ -336,13 +336,13 @@
   text-align: center;
   padding: 8px 16px;
   margin-top: 16px;
-  color: #EFB820;
+  color: #efb820;
   font-weight: 800;
   font-style: italic;
 }
 
 .propiedad-alquiler {
-  background-color:#150D3E; 
+  background-color: #150d3e;
 }
 
 .propiedad-alquiler h1 {
@@ -361,7 +361,7 @@
 .btn-vermas-alquiler {
   display: inline-block;
   padding: 12px 30px;
-  border: 2px solid #EFB820;
+  border: 2px solid #efb820;
   color: #fff;
   font-weight: 800;
   font-style: italic;
@@ -373,6 +373,136 @@
 
 .btn-vermas-alquiler:hover {
   background-color: #fff;
-  color: #150D3E;
+  color: #150d3e;
   transform: scale(1.05);
+}
+/*----FOOTER---*/
+.footer {
+  background-color: #f5b800;
+  padding: 20px 0 0; /* menos padding superior */
+  color: #333;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* menos espacio vertical */
+  padding: 0 20px;
+  position: relative;
+  gap: 20px;
+}
+
+.contact-info {
+  flex: 1;
+  margin: auto;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px; /* más compacto */
+  font-weight: 500;
+  font-size: 14px; /* tamaño de texto más pequeño */
+}
+
+.contact-icon {
+  width: 16p;
+  height: 16px;
+  margin-right: 6px; /* menos espacio */
+}
+
+.center-section .logo img {
+  width: 40%; 
+}
+
+.social-icons {
+  gap: 8px;
+}
+
+.social-icon {
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+}
+
+.contact-form-section {
+  flex: 1;
+  padding-left: 10px; /* menos espacio */
+}
+
+.contact-form {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 12px 15px;
+  border-radius: 8px;
+  width: 100%;
+  margin: 0 auto 15px; 
+}
+
+.form-title {
+  font-size: 16px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;  /* alinea label e input verticalmente */
+  margin-bottom: 8px;
+  gap: 8px;             /* espacio entre label e input */
+}
+
+.form-label {
+  width: 70px;          /* ancho fijo para todos los labels */
+  text-align: center;    /* texto del label alineado a la derecha */
+  font-size: 15px;
+}
+
+.form-input,
+.form-textarea {
+  flex: 1;              /* ocupa todo el espacio restante */
+  padding: 6px;
+  font-size: 13px;
+}
+
+.form-textarea {
+  height: 50px; /* más pequeña */
+}
+
+.form-submit {
+  display: block;          /* hace que se comporte como bloque */
+  width: 80%;              /* opcional: ancho del botón */
+  max-width: 200px;        /* opcional: máximo ancho */
+  padding: 8px 20px;       /* tamaño del botón */
+  font-size: 13px;
+  margin: 10px auto 0;     /* centra horizontalmente */
+  text-align: center;      /* centra el texto dentro del botón */
+  border: none;
+  border-radius: 4px;
+  background-color: #150d3e;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.footer-bottom {
+  background-color: #150d3e;
+  color: white;
+  text-align: center;
+  padding: 10px 0; /* menos alto */
+  font-weight: bold;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .contact-info,
+  .contact-form-section {
+    padding: 0;
+  }
 }

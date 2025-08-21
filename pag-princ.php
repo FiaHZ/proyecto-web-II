@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Solutions Real State</title>
   <link rel="stylesheet" href="../proyecto-web-II/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-pap3x...tu-integrity-hash..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -198,6 +200,75 @@
       <a href="#" class="btn-vermas-alquiler">Ver más</a>
     </div>
   </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <!-- Información de contacto -->
+      <div class="contact-info">
+        <div class="contact-item">
+          <i class="fas fa-map-marker-alt contact-icon"></i>
+          <div>
+            <strong>Dirección:</strong> Cañas Guanacaste, 100 mts Este<br>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <i class="fas fa-phone contact-icon"></i>
+          <div><strong>Teléfono:</strong> 8890-2030</div>
+        </div>
+
+        <div class="contact-item">
+          <i class="fas fa-envelope contact-icon"></i>
+          <div><strong>Email:</strong> info@utnrealstate.com</div>
+        </div>
+      </div>
+
+      <!-- Logo y redes sociales -->
+      <div class="center-section">
+        <div class="logo">
+          <img src="../proyecto-web-II/img/logo-black.png" alt="">
+        </div>
+
+        <div class="social-icons">
+          <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <!-- Formulario de contacto -->
+      <div class="contact-form-section">
+        <form class="contact-form">
+          <h3 class="form-title">Contáctanos</h3>
+          <div class="form-group">
+            <label class="form-label">Nombre:</label>
+            <input type="text" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email:</label>
+            <input type="email" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Teléfono:</label>
+            <input type="tel" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Mensaje:</label>
+            <textarea class="form-textarea" required></textarea>
+          </div>
+
+          <button type="submit" class="form-submit">Enviar</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; Derechos Reservados | 2024
+    </div>
+  </footer>
 
 </body>
 
