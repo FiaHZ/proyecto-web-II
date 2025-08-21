@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="input-box">
                 <input type="password" name="confirmar" class="input-field" placeholder="Confirmar contraseña" id="confirmPassword" required>
-                <i class="bi bi-eye-slash toggle-password" id="toggleConfirmPassword"></i>
+                  <i class="bi bi-eye-slash toggle-password" id="toggleConfirmPassword"></i>
             </div>
 
             <?php if ($msg): ?>
@@ -76,5 +76,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>¿Ya tienes cuenta? <a href="index.php">Inicia Sesión</a></p>
         </div>
     </div>
+
+    <script>
+        function togglePasswordVisibility(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+
+            icon.addEventListener("click", () => {
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.remove("bi-eye-slash");
+                    icon.classList.add("bi-eye");
+                } else {
+                    input.type = "password";
+                    icon.classList.remove("bi-eye");
+                    icon.classList.add("bi-eye-slash");
+                }
+            });
+        }
+
+        togglePasswordVisibility("password", "togglePassword");
+        togglePasswordVisibility("confirmPassword", "toggleConfirmPassword");
+    </script>
 </body>
 </html>

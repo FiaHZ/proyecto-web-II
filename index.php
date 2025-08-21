@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="input-box">
                 <input type="password" name="contrasena" class="input-field" placeholder="Contraseña" id="password" autocomplete="off" required>
-                <i class="bi bi-eye-slash toggle-password" id="togglePassword"></i>
+                 <i class="bi bi-eye-slash toggle-password" id="togglePassword"></i>
             </div>
 
             <?php if ($error): ?>
@@ -71,5 +71,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>¿No tiene una cuenta? <a href="registrar.php">Regístrese</a></p>
         </div>
     </div>
+
+      <script>
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+
+        togglePassword.addEventListener("click", () => {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                togglePassword.classList.remove("bi-eye-slash");
+                togglePassword.classList.add("bi-eye");
+            } else {
+                passwordInput.type = "password";
+                togglePassword.classList.remove("bi-eye");
+                togglePassword.classList.add("bi-eye-slash");
+            }
+        });
+    </script>
 </body>
 </html>
