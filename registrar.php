@@ -70,7 +70,6 @@
             });
         }
 
-        // Llamar a la función para cada input
         togglePasswordVisibility("password", "togglePassword");
         togglePasswordVisibility("confirmPassword", "toggleConfirmPassword");
     </script>
