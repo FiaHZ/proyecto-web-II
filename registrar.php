@@ -44,6 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="input-box">
                 <input type="text" name="nombre" class="input-field" placeholder="Nombre completo" autocomplete="off" required>
             </div>
+            <div class="input-box">
+                <input type="text" name="telefono" class="input-field" placeholder="Teléfono" autocomplete="off" required>
+            </div>
 
             <div class="input-box">
                 <input type="email" name="correo" class="input-field" placeholder="Correo electrónico" autocomplete="off" required>
