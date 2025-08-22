@@ -24,6 +24,10 @@ session_start();
   <link rel="stylesheet" href="../proyecto-web-II/css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     integrity="sha512-pap3x...tu-integrity-hash..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
 </head>
 
 <body>
@@ -45,7 +49,7 @@ session_start();
         <li><a href="#">ALQUILERES |</a></li>
         <li><a href="#">VENTAS |</a></li>
         <li><a href="#">CONTACTENOS</a></li>
-        <li><a href="login.php"><i class="bi bi-box-arrow-in-right"></i></a></li>
+        <li><a href="login.php"><i class="bi bi-box-arrow-in-right fs-3"></i></a></li>
       </ul>
       
       <div class="search-bar">
