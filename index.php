@@ -1,9 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION["usuario_id"])) {
-  header("Location: index.php");
-  exit;
-}
+
+
+//if (!isset($_SESSION["usuario_id"])) {
+  //header("Location: index.php");
+  //exit;
+//}
 ?>
 
 
@@ -18,9 +20,7 @@ if (!isset($_SESSION["usuario_id"])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Solutions Real State</title>
-  <!--  <h1>Bienvenido, <?= $_SESSION["usuario_nombre"] ?> 👋</h1>
-    <p>Tu rol es: <?= $_SESSION["usuario_rol"] ?></p>
-    <a href="logout.php">Cerrar Sesión</a>-->
+
   <link rel="stylesheet" href="../proyecto-web-II/css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     integrity="sha512-pap3x...tu-integrity-hash..." crossorigin="anonymous" referrerpolicy="no-referrer" />
