@@ -4,6 +4,7 @@ $msg = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST["nombre"];
+    $telefono = $_POST["telefono"];
     $correo = $_POST["correo"];
     $pass   = $_POST["contrasena"];
     $confirm= $_POST["confirmar"];
@@ -11,16 +12,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($pass !== $confirm) {
         $msg = "Las contraseñas no coinciden";
     } else {
-        $passHash = md5($pass); // igual que en la BD
+        // Verificar que el correo no exista
+        $check = "SELECT id FROM usuarios WHERE correo = ? OR usuario = ?";
+        $stmt_check = $conn->prepare($check);
+        $stmt_check->bind_param("ss", $correo, $correo);
+        $stmt_check->execute();
+        $result_check = $stmt_check->get_result();
 
-        $sql = "INSERT INTO usuarios (nombre, correo, usuario, contrasena, rol) VALUES (?,?,?,?, 'cliente')";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssss", $nombre, $correo, $correo, $passHash);
-
-        if ($stmt->execute()) {
-            $msg = "Usuario registrado con éxito. Ahora puede iniciar sesión.";
+        if ($result_check->num_rows > 0) {
+            $msg = "El correo ya está registrado";
         } else {
-            $msg = "Error: " . $conn->error;
+            $passHash = md5($pass);
+
+            $sql = "INSERT INTO usuarios (nombre, telefono, correo, usuario, contrasena, rol) VALUES (?,?,?,?,?, 'cliente')";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sssss", $nombre, $telefono, $correo, $correo, $passHash);
+
+            if ($stmt->execute()) {
+                $msg = "<span style='color: green;'>Usuario registrado con éxito. Ahora puede iniciar sesión.</span>";
+            } else {
+                $msg = "Error: " . $conn->error;
+            }
         }
     }
 }
@@ -63,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <?php if ($msg): ?>
-                <p style="color:red; text-align:center;"><?= $msg ?></p>
+                <p style="text-align:center;"><?= $msg ?></p>
             <?php endif; ?>
 
             <div class="input-submit">
@@ -73,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
 
         <div class="sign-up-link">
-            <p>¿Ya tienes cuenta? <a href="index.php">Inicia Sesión</a></p>
+            <p>¿Ya tienes cuenta? <a href="login.php">Inicia Sesión</a></p>
         </div>
     </div>
 
