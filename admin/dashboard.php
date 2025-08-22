@@ -16,6 +16,7 @@ $stats = $stats_result->fetch_assoc();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,14 +25,15 @@ $stats = $stats_result->fetch_assoc();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="../proyecto-web-II/css/dashboard.css">
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
             <div class="col-md-3 col-lg-2 sidebar">
                 <div class="p-4">
-                    <div class="text-center mb-4">
-                        <img src="../img/logo.png" alt="Logo" class="img-fluid mb-2" style="max-height: 50px;">
+                    <div class="text-center mb-4 sidebar-logo">
+                        <img src="../img/logo.png" alt="Logo" class="img-fluid">
                         <h5 class="text-white">Admin Panel</h5>
                         <p class="text-muted small">Bienvenido, <?= $_SESSION["usuario_nombre"] ?></p>
                     </div>
@@ -95,7 +97,7 @@ $stats = $stats_result->fetch_assoc();
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-xl-3 col-md-6 mb-4">
                         <div class="stats-card secondary">
                             <div class="d-flex align-items-center">
@@ -184,27 +186,28 @@ $stats = $stats_result->fetch_assoc();
                         LIMIT 2
                     ";
                     $activity_result = $conn->query($activity_query);
-                    
+
                     if ($activity_result->num_rows > 0):
                         while ($activity = $activity_result->fetch_assoc()):
-                    ?>
-                        <div class="activity-item">
-                            <div class="d-flex align-items-center">
-                                <div class="me-3">
-                                    <i class="bi <?= $activity['tipo'] == 'propiedad' ? 'bi-house' : 'bi-person' ?> text-primary"></i>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <div><?= htmlspecialchars($activity['mensaje']) ?></div>
-                                    <small class="text-muted">
-                                        <?= date('d/m/Y H:i', strtotime($activity['fecha'])) ?>
-                                    </small>
+                            ?>
+                            <div class="activity-item">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i
+                                            class="bi <?= $activity['tipo'] == 'propiedad' ? 'bi-house' : 'bi-person' ?> text-primary"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div><?= htmlspecialchars($activity['mensaje']) ?></div>
+                                        <small class="text-muted">
+                                            <?= date('d/m/Y H:i', strtotime($activity['fecha'])) ?>
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php 
+                        <?php
                         endwhile;
-                    else: 
-                    ?>
+                    else:
+                        ?>
                         <p class="text-muted text-center">No hay actividad reciente</p>
                     <?php endif; ?>
                 </div>
@@ -214,4 +217,5 @@ $stats = $stats_result->fetch_assoc();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
