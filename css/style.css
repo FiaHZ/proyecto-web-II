@@ -85,7 +85,7 @@
 .search-bar {
   width: 100%;
   text-align: right;
-  margin-top: 15px; 
+  margin-top: 15px;
 }
 
 .search-bar input {
@@ -113,10 +113,43 @@
   background-color: #d4a417;
 }
 .nav-links .fa-circle-user {
-  font-size: 35px;
-  margin-top: 15px;
+  font-size: 32px;
   color: white;
+  transition: 0.3s ease;
 }
+.nav-links .fa-circle-user:hover{
+  transform: scale(1.1);
+}
+.nav-links .bi-box-arrow-in-right {
+  display: inline-block;
+  font-size: 37px;
+  color: white;
+  transition: 0.3s ease;
+}
+.nav-links .bi-box-arrow-in-right:hover{
+  transform: scale(1.1);
+}
+
+.nav-links .bi-speedometer{
+  display: inline-block;
+  font-size: 32px;
+  color: white;
+  transition: 0.3s ease;
+}
+.nav-links .bi-speedometer:hover{
+  transform: scale(1.1);
+}
+.nav-links{
+  margin-top: 20px;
+  align-items: center;
+  display: flex;
+  gap: 15px;
+}
+dl, ol, ul{
+  margin-bottom: 0 !important;
+}
+
+
 /* --------FIN DE NAVBAR--------- */
 
 /* --------Imagen de Encabezado--------- */

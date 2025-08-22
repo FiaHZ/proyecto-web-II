@@ -3,11 +3,10 @@ session_start();
 
 
 //if (!isset($_SESSION["usuario_id"])) {
-  //header("Location: index.php");
-  //exit;
+//header("Location: index.php");
+//exit;
 //}
 ?>
-
 
 </body>
 
@@ -35,11 +34,11 @@ session_start();
   <header class="header">
     <div class="logo">
       <img src="../proyecto-web-II/img/logo.png" alt="logo de la empresa" />
-       <div class="social-icons-logo">
-          <a href="#"><i class="fa-brands fa-facebook"></i></a>
-          <a href="#""><i class=" fa-brands fa-youtube"></i></a>
-          <a href="#""><i class=" fa-brands fa-instagram"></i></a>
-        </div>
+      <div class="social-icons-logo">
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#""><i class=" fa-brands fa-youtube"></i></a>
+        <a href="#""><i class=" fa-brands fa-instagram"></i></a>
+      </div>
     </div>
 
     <nav>
@@ -49,9 +48,13 @@ session_start();
         <li><a href="#">ALQUILERES |</a></li>
         <li><a href="#">VENTAS |</a></li>
         <li><a href="#">CONTACTENOS</a></li>
-        <li><a href="login.php"><i class="bi bi-box-arrow-in-right fs-3"></i></a></li>
+        <li><a href="login.php"><i class="fa-regular fa-circle-user"></i></a></li>
+        <li><a href="logout.php"><i class="bi bi-box-arrow-in-right"></i></a></li>
+        <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] === 'admin'): ?>
+          <li><a href="../proyecto-web-II/admin/dashboard.php"><i class="bi bi-speedometer"></i></i></a></li>
+        <?php endif; ?>
       </ul>
-      
+
       <div class="search-bar">
         <input type="text" placeholder="Buscar..." />
         <button type="submit"><i class="fa fa-search"></i></button>
