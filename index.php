@@ -1,92 +1,292 @@
 <?php
 session_start();
-require_once "config/database.php";
-
-$error = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $correo = $_POST["correo"];
-    $pass   = $_POST["contrasena"];
-
-    $sql = "SELECT * FROM usuarios WHERE correo=? OR usuario=? LIMIT 1";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $correo, $correo);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows == 1) {
-        $user = $result->fetch_assoc();
-        // Comparar con md5 (tu DB usa md5 para las contraseñas)
-        if ($user["contrasena"] === md5($pass)) {
-            $_SESSION["usuario_id"] = $user["id"];
-            $_SESSION["usuario_nombre"] = $user["nombre"];
-            $_SESSION["usuario_rol"] = $user["rol"];
-
-            header("Location: pag-princ.php");
-            exit;
-        } else {
-            $error = "Contraseña incorrecta";
-        }
-    } else {
-        $error = "Usuario no encontrado";
-    }
+if (!isset($_SESSION["usuario_id"])) {
+  header("Location: index.php");
+  exit;
 }
 ?>
 
+
+</body>
+
+</html>
+
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="../proyecto-web-II/css/index.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solutions Real State</title>
+  <!--  <h1>Bienvenido, <?= $_SESSION["usuario_nombre"] ?> 👋</h1>
+    <p>Tu rol es: <?= $_SESSION["usuario_rol"] ?></p>
+    <a href="logout.php">Cerrar Sesión</a>-->
+  <link rel="stylesheet" href="../proyecto-web-II/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-pap3x...tu-integrity-hash..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
-    <div class="login-box">
-        <div class="login-header">
-            <header>Inicio de Sesión</header>
-        </div>
-
-        <form method="POST" action="">
-            <div class="input-box">
-                <input type="text" name="correo" class="input-field" placeholder="Correo o usuario" autocomplete="off" required>
-            </div>
-
-            <div class="input-box">
-                <input type="password" name="contrasena" class="input-field" placeholder="Contraseña" id="password" autocomplete="off" required>
-                 <i class="bi bi-eye-slash toggle-password" id="togglePassword"></i>
-            </div>
-
-            <?php if ($error): ?>
-                <p style="color:red; text-align:center;"><?= $error ?></p>
-            <?php endif; ?>
-
-            <div class="input-submit">
-                <button class="submit-btn" type="submit"></button>
-                <label for="submit">Iniciar Sesión</label>
-            </div>
-        </form>
-
-        <div class="sign-up-link">
-            <p>¿No tiene una cuenta? <a href="registrar.php">Regístrese</a></p>
-        </div>
+  <!----Navbar---->
+  <header class="header">
+    <div class="logo">
+      <img src="../proyecto-web-II/img/logo.png" alt="logo de la empresa" />
     </div>
 
-      <script>
-        const passwordInput = document.getElementById("password");
-        const togglePassword = document.getElementById("togglePassword");
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#">INICIO |</a></li>
+        <li><a href="#">QUIENES SOMOS |</a></li>
+        <li><a href="#">ALQUILERES |</a></li>
+        <li><a href="#">VENTAS |</a></li>
+        <li><a href="#">CONTACTENOS</a></li>
+      </ul>
+    </nav>
+  </header>
 
-        togglePassword.addEventListener("click", () => {
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                togglePassword.classList.remove("bi-eye-slash");
-                togglePassword.classList.add("bi-eye");
-            } else {
-                passwordInput.type = "password";
-                togglePassword.classList.remove("bi-eye");
-                togglePassword.classList.add("bi-eye-slash");
-            }
-        });
-    </script>
+  <!----Imagen de encabezado---->
+  <div class="img-header">
+    <img src="../proyecto-web-II/img/img-1.jpg" alt="" />
+    <div class="text-banner">
+      <h1>
+        PERMITENOS AYUDARTE A CUMPLIR <br />
+        TUS SUEÑOS
+      </h1>
+    </div>
+  </div>
+
+  <section class="quienes-somos">
+    <h1>QUIENES SOMOS</h1>
+    <div class="contenido-quienes-somos">
+      <div class="text-quienes-somos">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum odit ipsum magni laboriosam iusto nam, dolorum
+          autem at sed rerum maxime natus suscipit adipisci saepe nisi! Totam repudiandae et facere.
+          Facilis officiis in at molestias iure aliquam modi. Assumenda esse in vero, minima saepe cupiditate. Quibusdam
+          a qui maiores autem minus officia dolorem ratione magnam. Commodi ratione ad quidem pariatur!
+          Excepturi, voluptatem fugiat. Excepturi cupiditate porro distinctio debitis, repellat rerum perspiciatis
+          provident corporis molestias tenetur quasi, quaerat, suscipit architecto ullam quibusdam odio? Mollitia magnam
+          animi assumenda sapiente, consequuntur quae iure!
+          Temporibus debitis odit minus exercitationem deserunt ipsam ut, ducimus aut illum, sit error? Odio distinctio
+          praesentium ea adipisci laboriosam eveniet deserunt minima quo, dolore saepe, ipsum libero explicabo qui
+          commodi?</p>
+      </div>
+      <div>
+        <img class="img-quienes-somos" src="../proyecto-web-II/img/quienes-somos.jpg" alt="Quienes Somos">
+      </div>
+    </div>
+  </section>
+
+  <!----Propiedades Destacadas---->
+  <section class="propiedad">
+    <h1>PROPIEDADES DESTACADAS</h1>
+
+    <div class="contenido-propiedad">
+      <div class="card-propiedad">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content">
+          <h3>Card 1</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop"> Precio</div>
+          </p>
+        </div>
+      </div>
+
+      <div class="card-propiedad">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content">
+          <h3>Card 2</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop"> Precio</div>
+        </div>
+      </div>
+
+      <div class="card-propiedad">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content">
+          <h3>Card 3</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop"> Precio</div>
+          </p>
+        </div>
+      </div>
+
+    </div>
+    <!-- Botón Ver más -->
+    <div class="btn-vermas-container">
+      <a href="#" class="btn-vermas">Ver más</a>
+    </div>
+  </section>
+
+  <!----Propiedades Venta---->
+  <section class="propiedad-venta">
+    <h1>PROPIEDADES EN VENTA</h1>
+
+    <div class="contenido-propiedad-venta">
+      <div class="card-propiedad-venta">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content-venta">
+          <h3>Card 1</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop-venta"> Precio</div>
+          </p>
+        </div>
+      </div>
+
+      <div class="card-propiedad-venta">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content-venta">
+          <h3>Card 2</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop-venta"> Precio</div>
+        </div>
+      </div>
+
+      <div class="card-propiedad-venta">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content-venta">
+          <h3>Card 3</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop-venta"> Precio</div>
+          </p>
+        </div>
+      </div>
+
+    </div>
+    <!-- Botón Ver más -->
+    <div class="btn-vermas-container-venta">
+      <a href="#" class="btn-vermas-venta">Ver más</a>
+    </div>
+  </section>
+
+  <!----Propiedades Alquiler---->
+  <section class="propiedad-alquiler">
+    <h1>PROPIEDADES EN ALQUILER</h1>
+
+    <div class="contenido-propiedad-alquiler">
+      <div class="card-propiedad-alquiler">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content-alquiler">
+          <h3>Card 1</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop-alquiler"> Precio</div>
+          </p>
+        </div>
+      </div>
+
+      <div class="card-propiedad-alquiler">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content-alquiler">
+          <h3>Card 2</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop-alquiler"> Precio</div>
+        </div>
+      </div>
+
+      <div class="card-propiedad-alquiler">
+        <img src="../proyecto-web-II/img/prop-dest1.png" alt="" />
+        <div class="card-content-alquiler">
+          <h3>Card 3</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti amet culpa perferendis, necessitatibus
+            deserunt a autem corporis dignissimos doloribus modi
+          <div class="precio-prop-alquiler"> Precio</div>
+          </p>
+        </div>
+      </div>
+
+    </div>
+    <!-- Botón Ver más -->
+    <div class="btn-vermas-container-alquiler">
+      <a href="#" class="btn-vermas-alquiler">Ver más</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <!-- Información de contacto -->
+      <div class="contact-info">
+        <div class="contact-item">
+          <div>
+            <i class="fas fa-map-marker-alt contact-icon"></i>
+            <strong>Dirección:</strong> Cañas Guanacaste, 100 mts Este
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <i class="fas fa-phone contact-icon"></i><br>
+          <div><strong>Teléfono:</strong> 8890-2030</div>
+        </div>
+
+        <div class="contact-item">
+          <i class="fas fa-envelope contact-icon"></i>
+          <div><strong>Email:</strong> info@utnrealstate.com</div>
+        </div>
+      </div>
+
+      <!-- Logo y redes sociales -->
+      <div class="center-section">
+        <div class="logo">
+          <img src="../proyecto-web-II/img/logo-black.png" alt="">
+        </div>
+
+        <div class="social-icons">
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#""><i class=" fa-brands fa-youtube"></i></a>
+          <a href="#""><i class=" fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <!-- Formulario de contacto -->
+      <div class="contact-form-section">
+        <form class="contact-form" action="enviar_formulario.php" method="POST">
+          <h3 class="form-title">Contáctanos</h3>
+
+          <div class="form-group">
+            <label class="form-label">Nombre:</label>
+            <input type="text" class="form-input" name="nombre" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email:</label>
+            <input type="email" class="form-input" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Teléfono:</label>
+            <input type="tel" class="form-input" name="telefono" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Mensaje:</label>
+            <textarea class="form-textarea" name="mensaje" required></textarea>
+          </div>
+
+          <button type="submit" class="form-submit">Enviar</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; Derechos Reservados | 2024
+    </div>
+  </footer>
+
 </body>
+
 </html>
