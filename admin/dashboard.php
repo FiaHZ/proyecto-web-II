@@ -58,7 +58,7 @@ $stats = $stats_result->fetch_assoc();
                             <i class="bi bi-person me-2"></i> Mi Perfil
                         </a>
                         <hr class="my-3">
-                        <a class="nav-link text-danger" href="../logout.php">
+                        <a class="nav-link text-danger" href="logout.php">
                             <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
                         </a>
                     </nav>
