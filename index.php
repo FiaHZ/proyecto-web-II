@@ -45,7 +45,7 @@ session_start();
         <li><a href="#">ALQUILERES |</a></li>
         <li><a href="#">VENTAS |</a></li>
         <li><a href="#">CONTACTENOS</a></li>
-        <li><a href="login.php"><i class="fa-regular fa-circle-user"></i></a></li>
+        <li><a href="login.php"><i class="bi bi-box-arrow-in-right"></i></a></li>
       </ul>
       
       <div class="search-bar">
