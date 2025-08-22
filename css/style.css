@@ -13,16 +13,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 85px;
+  height: 160px;
   padding: 5px 10%;
 }
 .header .logo {
   cursor: pointer;
 }
 .header .logo img {
-  height: 115px;
+  height: 125px;
   width: auto;
   transition: all 0.3s;
+  margin-left: 35px;
 }
 
 .header .logo img:hover {
@@ -49,7 +50,73 @@
 .header .nav-links a:hover {
   color: #e4e4e4;
 }
+.social-icons-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -25px;
+  margin-right: 25px;
+}
 
+.social-icons-logo a {
+  text-decoration: none;
+  padding: 10px;
+  background-color: white;
+  margin: 10px;
+  border-radius: 50%;
+  transition: 0.3s ease;
+}
+.social-icons-logo a i {
+  font-size: 1.3em;
+  color: black;
+  opacity: 0.9;
+  transition: 0.3s ease;
+}
+
+.social-icons-logo a:hover {
+  background-color: #111;
+  transform: scale(1.05);
+}
+.social-icons-logo a:hover i {
+  color: white;
+  transform: scale(1.05);
+}
+/* ---------BARRA DE BÚSQUEDA--------- */
+.search-bar {
+  width: 100%;
+  text-align: right;
+  margin-top: 15px; 
+}
+
+.search-bar input {
+  width: 40%;
+  padding: 8px 12px;
+  border: 2px solid #efb820;
+  border-radius: 25px 0 0 25px;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-bar button {
+  padding: 8px 15px;
+  border: 2px solid #efb820;
+  border-left: none;
+  background-color: #efb820;
+  color: #02050e;
+  font-weight: bold;
+  border-radius: 0 25px 25px 0;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.search-bar button:hover {
+  background-color: #d4a417;
+}
+.nav-links .fa-circle-user {
+  font-size: 35px;
+  margin-top: 15px;
+  color: white;
+}
 /* --------FIN DE NAVBAR--------- */
 
 /* --------Imagen de Encabezado--------- */
@@ -403,9 +470,9 @@
 .contact-item {
   display: flex;
   align-items: center;
-  margin-bottom: 25px; 
+  margin-bottom: 25px;
   font-weight: 500;
-  font-size: 20px; 
+  font-size: 20px;
 }
 
 .contact-icon {
@@ -415,20 +482,20 @@
 .center-section {
   flex: 1;
   display: flex;
-  flex-direction: column; 
-  align-items: center; 
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
 .center-section .logo img {
- width: 190px; /* ajusta el tamaño del logo */
+  width: 190px; /* ajusta el tamaño del logo */
   margin-left: 50px;
   max-width: 100%;
   transition: 0.3s ease;
   cursor: pointer;
 }
 
-.center-section .logo img:hover{
+.center-section .logo img:hover {
   transform: scale(1.05);
 }
 
@@ -452,22 +519,22 @@
   transition: 0.3s ease;
 }
 
-.social-icons a:hover{
+.social-icons a:hover {
   background-color: #111;
   transform: scale(1.05);
 }
-.social-icons a:hover i{
+.social-icons a:hover i {
   color: white;
   transform: scale(1.05);
 }
 
 .contact-form-section {
   flex: 1;
-  padding-left: 10px; /* menos espacio */
+  padding-left: 10px;
 }
 
 .contact-form {
-  background-color: #E3D1D1;
+  background-color: #e3d1d1;
   padding: 12px 15px;
   border-radius: 8px;
   width: 100%;
@@ -482,21 +549,20 @@
 
 .form-group {
   display: flex;
-  align-items: center; /* alinea label e input verticalmente */
+  align-items: center;
   margin-bottom: 8px;
-  gap: 8px; /* espacio entre label e input */
+  gap: 8px;
 }
 
 .form-label {
-  width: 70px; /* ancho fijo para todos los labels */
-  text-align: center; /* texto del label alineado a la derecha */
+  width: 70px;
+  text-align: center;
   font-size: 15px;
-  
 }
 
 .form-input,
 .form-textarea {
-  flex: 1; /* ocupa todo el espacio restante */
+  flex: 1;
   padding: 6px;
   font-size: 15px;
   border-radius: 10px;
@@ -504,17 +570,17 @@
 }
 
 .form-textarea {
-  height: 50px; /* más pequeña */
+  height: 50px;
 }
 
 .form-submit {
-  display: block; /* hace que se comporte como bloque */
-  width: 80%; /* opcional: ancho del botón */
-  max-width: 200px; /* opcional: máximo ancho */
-  padding: 8px 20px; /* tamaño del botón */
+  display: block;
+  width: 80%;
+  max-width: 200px;
+  padding: 8px 20px;
   font-size: 13px;
-  margin: 10px auto 0; /* centra horizontalmente */
-  text-align: center; /* centra el texto dentro del botón */
+  margin: 10px auto 0;
+  text-align: center;
   border: none;
   border-radius: 10px;
   background-color: #150d3e;
@@ -524,7 +590,7 @@
   transition: 0.3s ease;
 }
 
-.form-submit:hover{
+.form-submit:hover {
   background-color: #2c1697;
 }
 

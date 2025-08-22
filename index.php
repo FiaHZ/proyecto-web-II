@@ -31,6 +31,11 @@ if (!isset($_SESSION["usuario_id"])) {
   <header class="header">
     <div class="logo">
       <img src="../proyecto-web-II/img/logo.png" alt="logo de la empresa" />
+       <div class="social-icons-logo">
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#""><i class=" fa-brands fa-youtube"></i></a>
+          <a href="#""><i class=" fa-brands fa-instagram"></i></a>
+        </div>
     </div>
 
     <nav>
@@ -40,9 +45,15 @@ if (!isset($_SESSION["usuario_id"])) {
         <li><a href="#">ALQUILERES |</a></li>
         <li><a href="#">VENTAS |</a></li>
         <li><a href="#">CONTACTENOS</a></li>
-         <li><a href="login.php"><i class="fa-regular fa-circle-user" style="color: white; margin-left: 15px; font-size: 35px;"></i></a></li>
+        <li><a href="login.php"><i class="fa-regular fa-circle-user"></i></a></li>
       </ul>
+      
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar..." />
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </div>
     </nav>
+
   </header>
 
   <!----Imagen de encabezado---->
