@@ -40,6 +40,7 @@ if (!isset($_SESSION["usuario_id"])) {
         <li><a href="#">ALQUILERES |</a></li>
         <li><a href="#">VENTAS |</a></li>
         <li><a href="#">CONTACTENOS</a></li>
+         <li><a href="login.php"><i class="fa-regular fa-circle-user" style="color: white; margin-left: 15px; font-size: 35px;"></i></a></li>
       </ul>
     </nav>
   </header>
