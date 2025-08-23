@@ -308,21 +308,12 @@ $ubicaciones_result = $conn->query($ubicaciones_query);
                                     </div>
                                 </div>
                                 
-                                <!-- Botones -->
+                                <!-- Botón Ver Detalles únicamente -->
                                 <div class="d-flex gap-2 mt-3">
                                     <a href="detalle_propiedad.php?id=<?= $propiedad['id'] ?>" 
-                                       class="btn btn-primary flex-fill">
+                                       class="btn btn-primary w-100">
                                         <i class="bi bi-eye"></i> Ver Detalles
                                     </a>
-                                    <a href="tel:<?= $propiedad['vendedor_telefono'] ?>" 
-                                       class="btn btn-outline-success">
-                                        <i class="bi bi-telephone"></i>
-                                    </a>
-                                    <?php if (isset($_SESSION['usuario_id'])): ?>
-                                        <button class="btn btn-outline-danger" onclick="toggleFavorito(<?= $propiedad['id'] ?>)">
-                                            <i class="bi bi-heart"></i>
-                                        </button>
-                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -471,11 +462,5 @@ $ubicaciones_result = $conn->query($ubicaciones_query);
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Función para favoritos (puedes implementarla después)
-        function toggleFavorito(propiedadId) {
-            alert('Funcionalidad de favoritos en desarrollo');
-        }
-    </script>
 </body>
 </html>

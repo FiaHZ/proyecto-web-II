@@ -551,20 +551,6 @@ $stats = $stats_result->fetch_assoc();
                 </div>
             </div>
         </div>
-
-        <!-- Llamada a la acción -->
-        <div class="card bg-info text-white mt-5">
-            <div class="card-body text-center">
-                <h4>¿Necesitas ayuda para encontrar tu próximo hogar?</h4>
-                <p class="mb-3">Nuestros especialistas en alquileres pueden asesorarte personalmente</p>
-                <div class="d-flex justify-content-center gap-3">
-                    <a href="tel:<?= $config['telefono'] ?? '2222-3333' ?>" class="btn btn-light">
-                        <i class="bi bi-telephone"></i> Llamar Especialista
-                    </a>
-                    <a href="index.php#contacto" class="btn btn-outline-light">
-                        <i class="bi bi-envelope"></i> Solicitar Asesoría
-                    </a>
-                </div>
             </div>
         </div>
     </div>
