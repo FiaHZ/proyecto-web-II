@@ -102,7 +102,7 @@ $sidebar_path = $is_admin ? "admin" : ($is_vendedor ? "vendedor" : "");
     <title>Mi Perfil - <?= $is_admin ? 'Admin' : ($is_vendedor ? 'Vendedor' : 'Cliente') ?> Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../proyecto-web-II/css/perfil.css">
+    <link rel="stylesheet" href="../css/perfil.css">
 </head>
 <body>
     <div class="container-fluid">
@@ -112,7 +112,7 @@ $sidebar_path = $is_admin ? "admin" : ($is_vendedor ? "vendedor" : "");
             <div class="col-md-3 col-lg-2 sidebar">
                 <div class="p-4">
                     <div class="text-center mb-4">
-                        <img src="../img/logo.png" alt="Logo" class="img-fluid mb-2" style="max-height: 50px;">
+                        <img src="../img/logo.png" alt="Logo" class="img-fluid" style="max-height: 100px;"> 
                         <h5 class="text-white"><?= $is_admin ? 'Admin' : 'Vendedor' ?> Panel</h5>
                         <p class="text-muted small">Bienvenido, <?= $_SESSION["usuario_nombre"] ?></p>
                     </div>
@@ -131,9 +131,6 @@ $sidebar_path = $is_admin ? "admin" : ($is_vendedor ? "vendedor" : "");
                         <a class="nav-link" href="propiedades.php">
                             <i class="bi bi-house me-2"></i> Propiedades
                         </a>
-                        <a class="nav-link" href="mensajes.php">
-                            <i class="bi bi-envelope me-2"></i> Mensajes
-                        </a>
                         <?php else: ?>
                         <a class="nav-link" href="propiedades.php">
                             <i class="bi bi-house me-2"></i> Mis Propiedades
@@ -143,6 +140,8 @@ $sidebar_path = $is_admin ? "admin" : ($is_vendedor ? "vendedor" : "");
                             <i class="bi bi-person me-2"></i> Mi Perfil
                         </a>
                         <hr class="my-3">
+                        <a class="nav-link text-light" href="../index.php">
+                            <i class="bi bi-house-door me-2"></i> Ver Sitio Web
                         <a class="nav-link text-danger" href="../logout.php">
                             <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
                         </a>

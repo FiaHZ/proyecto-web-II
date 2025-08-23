@@ -117,7 +117,7 @@ $vendedores_result = $conn->query($vendedores_query);
     <title>Gestión de Propiedades - Admin Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../proyecto-web-II/css/propiedades.css">
+    <link rel="stylesheet" href="../css/propiedades.css">
 </head>
 <body>
     <div class="container-fluid">
@@ -144,13 +144,13 @@ $vendedores_result = $conn->query($vendedores_query);
                         <a class="nav-link active" href="propiedades.php">
                             <i class="bi bi-house me-2"></i> Propiedades
                         </a>
-                        <a class="nav-link" href="mensajes.php">
-                            <i class="bi bi-envelope me-2"></i> Mensajes
                         </a>
                         <a class="nav-link" href="perfil.php">
                             <i class="bi bi-person me-2"></i> Mi Perfil
                         </a>
                         <hr class="my-3">
+                        <a class="nav-link text-light" href="../index.php">
+                            <i class="bi bi-house-door me-2"></i> Ver Sitio Web
                         <a class="nav-link text-danger" href="../logout.php">
                             <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
                         </a>

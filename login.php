@@ -81,6 +81,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="sign-up-link">             
             <p>¿No tiene una cuenta? <a href="registrar.php">Regístrese</a></p>         
         </div>
+        
+        <!-- Botón de regreso al index -->
+        <div class="back-link">
+            <a href="index.php" class="back-btn">
+                <i class="bi bi-arrow-left"></i> Volver al Inicio
+            </a>
+        </div>
     </div>        
     
     <script>         

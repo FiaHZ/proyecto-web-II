@@ -1,91 +1,72 @@
-:root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --bg-light: #ecf0f1;
-        }
-
-        body {
-            background-color: var(--bg-light);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         .sidebar {
-            background: linear-gradient(135deg, var(--primary-color), #34495e);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             box-shadow: 2px 0 10px rgba(0,0,0,0.1);
         }
-
+        
         .sidebar .nav-link {
-            color: #bdc3c7;
-            padding: 15px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 12px 20px;
+            margin: 5px 0;
             border-radius: 10px;
-            margin: 5px 10px;
             transition: all 0.3s ease;
         }
-
-        .sidebar .nav-link:hover {
-            background: rgba(255,255,255,0.1);
+        
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background: rgba(255, 255, 255, 0.1);
             color: white;
             transform: translateX(5px);
         }
-
-        .sidebar .nav-link.active {
-            background: rgba(255,255,255,0.2);
-            color: white;
-        }
-
+        
         .main-content {
-            padding: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+            min-height: 100vh;
         }
-
+        
         .users-table {
             background: white;
             border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
-
+        
         .btn-custom {
-            border-radius: 10px;
+            border-radius: 25px;
             padding: 8px 20px;
             font-weight: 600;
             transition: all 0.3s ease;
         }
-
+        
         .btn-custom:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-
+        
         .role-badge {
             padding: 5px 12px;
             border-radius: 20px;
-            font-size: 0.85em;
+            font-size: 0.8em;
             font-weight: 600;
+            text-transform: uppercase;
         }
-
-        .role-admin { background-color: #e74c3c; color: white; }
-        .role-vendedor { background-color: #f39c12; color: white; }
-        .role-cliente { background-color: #27ae60; color: white; }
-
+        
+        .role-admin { background: #dc3545; color: white; }
+        .role-vendedor { background: #28a745; color: white; }
+        .role-cliente { background: #007bff; color: white; }
+        
         .modal-content {
             border-radius: 15px;
             border: none;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-
+        
         .modal-header {
-            border-bottom: 2px solid var(--bg-light);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             border-radius: 15px 15px 0 0;
         }
-
-        .form-control {
-            border-radius: 10px;
-            border: 2px solid #e9ecef;
-            padding: 12px;
-        }
-
-        .form-control:focus {
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(102, 126, 234, 0.1);
         }

@@ -54,16 +54,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usuario = $_POST['usuario'];
         $rol = $_POST['rol'];
 
-        $update_query = "UPDATE usuarios SET nombre = ?, telefono = ?, correo = ?, usuario = ?, rol = ? WHERE id = ?";
-        $update_stmt = $conn->prepare($update_query);
-        $update_stmt->bind_param("sssssi", $nombre, $telefono, $correo, $usuario, $rol, $id);
-        
-        if ($update_stmt->execute()) {
-            $mensaje = "Usuario actualizado exitosamente";
-            $tipo_mensaje = "success";
-        } else {
-            $mensaje = "Error al actualizar usuario";
+        // Verificar que el usuario/correo no exista en otro usuario
+        $check_query = "SELECT id FROM usuarios WHERE (usuario = ? OR correo = ?) AND id != ?";
+        $check_stmt = $conn->prepare($check_query);
+        $check_stmt->bind_param("ssi", $usuario, $correo, $id);
+        $check_stmt->execute();
+        $result = $check_stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $mensaje = "El usuario o correo ya existe en otro registro";
             $tipo_mensaje = "danger";
+        } else {
+            $update_query = "UPDATE usuarios SET nombre = ?, telefono = ?, correo = ?, usuario = ?, rol = ? WHERE id = ?";
+            $update_stmt = $conn->prepare($update_query);
+            $update_stmt->bind_param("sssssi", $nombre, $telefono, $correo, $usuario, $rol, $id);
+            
+            if ($update_stmt->execute()) {
+                $mensaje = "Usuario actualizado exitosamente";
+                $tipo_mensaje = "success";
+            } else {
+                $mensaje = "Error al actualizar usuario";
+                $tipo_mensaje = "danger";
+            }
         }
     }
 
@@ -120,7 +132,8 @@ $usuarios_result = $conn->query($usuarios_query);
     <title>Gestión de Usuarios - Admin Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../proyecto-web-II/css/usuarios.css">
+    <link rel="stylesheet" href="../css/usuarios.css">
+
 </head>
 <body>
     <div class="container-fluid">
@@ -147,13 +160,12 @@ $usuarios_result = $conn->query($usuarios_query);
                         <a class="nav-link" href="propiedades.php">
                             <i class="bi bi-house me-2"></i> Propiedades
                         </a>
-                        <a class="nav-link" href="mensajes.php">
-                            <i class="bi bi-envelope me-2"></i> Mensajes
-                        </a>
                         <a class="nav-link" href="perfil.php">
                             <i class="bi bi-person me-2"></i> Mi Perfil
                         </a>
                         <hr class="my-3">
+                        <a class="nav-link text-light" href="../index.php">
+                            <i class="bi bi-house-door me-2"></i> Ver Sitio Web
                         <a class="nav-link text-danger" href="../logout.php">
                             <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
                         </a>
@@ -177,83 +189,7 @@ $usuarios_result = $conn->query($usuarios_query);
                     <div class="alert alert-<?= $tipo_mensaje ?> alert-dismissible fade show" role="alert">
                         <i class="bi bi-<?= $tipo_mensaje == 'success' ? 'check-circle' : 'exclamation-triangle' ?> me-2"></i>
                         <?= $mensaje ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form method="POST">
-                    <input type="hidden" id="pass_id" name="id">
-                    <div class="modal-body">
-                        <p>Cambiar contraseña para: <strong id="pass_nombre"></strong></p>
-                        <div class="mb-3">
-                            <label for="nueva_contrasena" class="form-label">Nueva Contraseña</label>
-                            <input type="password" class="form-control" id="nueva_contrasena" name="nueva_contrasena" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" name="cambiar_contrasena" class="btn btn-warning">Cambiar Contraseña</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Confirmar Eliminación -->
-    <div class="modal fade" id="eliminarUsuarioModal" tabindex="-1">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2"></i> Confirmar Eliminación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form method="POST">
-                    <input type="hidden" id="delete_id" name="id">
-                    <div class="modal-body">
-                        <p>¿Está seguro de que desea eliminar al usuario <strong id="delete_nombre"></strong>?</p>
-                        <div class="alert alert-warning">
-                            <small><i class="bi bi-exclamation-triangle me-1"></i> Esta acción no se puede deshacer.</small>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" name="eliminar_usuario" class="btn btn-danger">Eliminar Usuario</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function editarUsuario(id, nombre, telefono, correo, usuario, rol) {
-            document.getElementById('edit_id').value = id;
-            document.getElementById('edit_nombre').value = nombre;
-            document.getElementById('edit_telefono').value = telefono;
-            document.getElementById('edit_correo').value = correo;
-            document.getElementById('edit_usuario').value = usuario;
-            document.getElementById('edit_rol').value = rol;
-            
-            const modal = new bootstrap.Modal(document.getElementById('editarUsuarioModal'));
-            modal.show();
-        }
-
-        function cambiarContrasena(id, nombre) {
-            document.getElementById('pass_id').value = id;
-            document.getElementById('pass_nombre').textContent = nombre;
-            
-            const modal = new bootstrap.Modal(document.getElementById('cambiarContrasenaModal'));
-            modal.show();
-        }
-
-        function eliminarUsuario(id, nombre) {
-            document.getElementById('delete_id').value = id;
-            document.getElementById('delete_nombre').textContent = nombre;
-            
-            const modal = new bootstrap.Modal(document.getElementById('eliminarUsuarioModal'));
-            modal.show();
-        }
-    </script>
-</body>
-</html> class="btn-close" data-bs-dismiss="alert"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 <?php endif; ?>
 
@@ -413,4 +349,80 @@ $usuarios_result = $conn->query($usuarios_query);
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="bi bi-key me-2"></i> Cambiar Contraseña</h5>
-                    <button type="button"
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form method="POST">
+                    <input type="hidden" id="pass_id" name="id">
+                    <div class="modal-body">
+                        <p>Cambiar contraseña para: <strong id="pass_nombre"></strong></p>
+                        <div class="mb-3">
+                            <label for="nueva_contrasena" class="form-label">Nueva Contraseña</label>
+                            <input type="password" class="form-control" id="nueva_contrasena" name="nueva_contrasena" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" name="cambiar_contrasena" class="btn btn-warning">Cambiar Contraseña</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmar Eliminación -->
+    <div class="modal fade" id="eliminarUsuarioModal" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2"></i> Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form method="POST">
+                    <input type="hidden" id="delete_id" name="id">
+                    <div class="modal-body">
+                        <p>¿Está seguro de que desea eliminar al usuario <strong id="delete_nombre"></strong>?</p>
+                        <div class="alert alert-warning">
+                            <small><i class="bi bi-exclamation-triangle me-1"></i> Esta acción no se puede deshacer.</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" name="eliminar_usuario" class="btn btn-danger">Eliminar Usuario</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function editarUsuario(id, nombre, telefono, correo, usuario, rol) {
+            document.getElementById('edit_id').value = id;
+            document.getElementById('edit_nombre').value = nombre;
+            document.getElementById('edit_telefono').value = telefono;
+            document.getElementById('edit_correo').value = correo;
+            document.getElementById('edit_usuario').value = usuario;
+            document.getElementById('edit_rol').value = rol;
+            
+            const modal = new bootstrap.Modal(document.getElementById('editarUsuarioModal'));
+            modal.show();
+        }
+
+        function cambiarContrasena(id, nombre) {
+            document.getElementById('pass_id').value = id;
+            document.getElementById('pass_nombre').textContent = nombre;
+            
+            const modal = new bootstrap.Modal(document.getElementById('cambiarContrasenaModal'));
+            modal.show();
+        }
+
+        function eliminarUsuario(id, nombre) {
+            document.getElementById('delete_id').value = id;
+            document.getElementById('delete_nombre').textContent = nombre;
+            
+            const modal = new bootstrap.Modal(document.getElementById('eliminarUsuarioModal'));
+            modal.show();
+        }
+    </script>
+</body>
+</html>

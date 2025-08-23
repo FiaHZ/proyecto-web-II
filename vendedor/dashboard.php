@@ -89,7 +89,10 @@ $reservas_recientes_result = $stmt_res->get_result();
                         <a class="nav-link text-light" href="../index.php">
                             <i class="bi bi-house-door me-2"></i> Ver Sitio Web
                         </a>
-                        <a class="nav-link text-warning" href="../logout.php">
+                        <hr class="my-3">
+                        <a class="nav-link text-light" href="../index.php">
+                            <i class="bi bi-house-door me-2"></i> Ver Sitio Web
+                        <a class="nav-link text-danger" href="../logout.php">
                             <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
                         </a>
                     </nav>

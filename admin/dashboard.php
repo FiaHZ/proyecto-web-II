@@ -23,6 +23,7 @@ $stats = $stats_result->fetch_assoc();
     <title>Panel de Administración</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 
 <body>
@@ -32,7 +33,7 @@ $stats = $stats_result->fetch_assoc();
             <div class="col-md-3 col-lg-2 sidebar">
                 <div class="p-4">
                     <div class="text-center mb-4 sidebar-logo">
-                        <img src="../img/logo.png" alt="Logo" class="img-fluid" style="max-height: 50px;">
+                        <img src="../img/logo.png" alt="Logo" class="img-fluid" style="max-height: 100px;">
                         <h5 class="text-white mt-2">Admin Panel</h5>
                         <p class="text-muted small">Bienvenido, <?= $_SESSION["usuario_nombre"] ?></p>
                     </div>
@@ -54,6 +55,8 @@ $stats = $stats_result->fetch_assoc();
                             <i class="bi bi-person me-2"></i> Mi Perfil
                         </a>
                         <hr class="my-3">
+                        <a class="nav-link text-light" href="../index.php">
+                            <i class="bi bi-house-door me-2"></i> Ver Sitio Web
                         <a class="nav-link text-danger" href="../logout.php">
                             <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
                         </a>
@@ -144,6 +147,7 @@ $stats = $stats_result->fetch_assoc();
                             <i class="bi bi-currency-dollar text-success" style="font-size: 2rem;"></i>
                             <h5 class="mt-2">Propiedades en Venta</h5>
                             <h3 class="text-success"><?= $stats['propiedades_venta'] ?></h3>
+                            <small class="text-muted">Disponibles para compra</small>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
@@ -151,6 +155,7 @@ $stats = $stats_result->fetch_assoc();
                             <i class="bi bi-key text-info" style="font-size: 2rem;"></i>
                             <h5 class="mt-2">Propiedades en Alquiler</h5>
                             <h3 class="text-info"><?= $stats['propiedades_alquiler'] ?></h3>
+                            <small class="text-muted">Disponibles para renta</small>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
@@ -158,15 +163,22 @@ $stats = $stats_result->fetch_assoc();
                             <i class="bi bi-person-plus text-warning" style="font-size: 2rem;"></i>
                             <h5 class="mt-2">Solicitudes Vendedor</h5>
                             <h3 class="text-warning"><?= $stats['solicitudes_vendedor_pendientes'] ?></h3>
+                            <small class="text-muted">Pendientes de revisión</small>
                         </div>
                     </div>
                 </div>
 
                 <!-- Recent Activity -->
                 <div class="recent-activity">
-                    <h5 class="mb-4">Actividad Reciente</h5>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="mb-0">
+                            <i class="bi bi-activity me-2"></i>Actividad Reciente
+                        </h5>
+                        <small class="text-muted">Últimos movimientos del sistema</small>
+                    </div>
+                    
                     <?php
-                    // Obtener actividad reciente - CORREGIDO
+                    // Obtener actividad reciente - propiedades
                     $activity_query = "
                         SELECT 'propiedad' as tipo, titulo as descripcion, fecha_creacion as fecha, 
                                CONCAT('Nueva propiedad agregada: ', titulo) as mensaje
@@ -176,58 +188,93 @@ $stats = $stats_result->fetch_assoc();
                     ";
                     $activity_result = $conn->query($activity_query);
 
+                    $has_activity = false;
                     if ($activity_result && $activity_result->num_rows > 0):
+                        $has_activity = true;
                         while ($activity = $activity_result->fetch_assoc()):
                     ?>
                         <div class="activity-item">
                             <div class="d-flex align-items-center">
                                 <div class="me-3">
-                                    <i class="bi <?= $activity['tipo'] == 'propiedad' ? 'bi-house' : 'bi-person' ?> text-primary"></i>
+                                    <div class="stats-icon" style="background: var(--success-color); width: 40px; height: 40px; font-size: 1rem;">
+                                        <i class="bi bi-house"></i>
+                                    </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <div><?= htmlspecialchars($activity['mensaje']) ?></div>
+                                    <div class="fw-semibold"><?= htmlspecialchars($activity['mensaje']) ?></div>
                                     <small class="text-muted">
+                                        <i class="bi bi-clock me-1"></i>
                                         <?= date('d/m/Y H:i', strtotime($activity['fecha'])) ?>
                                     </small>
                                 </div>
                             </div>
                         </div>
-                    <?php
-                        endwhile;
-                    else:
-                    ?>
-                        <div class="activity-item">
-                            <div class="text-center">
-                                <i class="bi bi-clock-history display-4 text-muted"></i>
-                                <p class="text-muted mt-2">No hay actividad reciente</p>
-                            </div>
-                        </div>
-                    <?php endif; ?>
+                    <?php endwhile; endif; ?>
 
                     <?php
                     // Agregar actividad de usuarios nuevos
                     $users_query = "SELECT nombre, fecha_creacion FROM usuarios WHERE rol = 'cliente' ORDER BY fecha_creacion DESC LIMIT 2";
                     $users_result = $conn->query($users_query);
                     if ($users_result && $users_result->num_rows > 0):
+                        $has_activity = true;
                         while ($user = $users_result->fetch_assoc()):
                     ?>
                         <div class="activity-item">
                             <div class="d-flex align-items-center">
                                 <div class="me-3">
-                                    <i class="bi bi-person-plus text-success"></i>
+                                    <div class="stats-icon" style="background: var(--primary-color); width: 40px; height: 40px; font-size: 1rem;">
+                                        <i class="bi bi-person-plus"></i>
+                                    </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <div>Nuevo usuario registrado: <?= htmlspecialchars($user['nombre']) ?></div>
+                                    <div class="fw-semibold">Nuevo usuario registrado: <?= htmlspecialchars($user['nombre']) ?></div>
                                     <small class="text-muted">
+                                        <i class="bi bi-clock me-1"></i>
                                         <?= date('d/m/Y H:i', strtotime($user['fecha_creacion'])) ?>
                                     </small>
                                 </div>
                             </div>
                         </div>
-                    <?php
-                        endwhile;
-                    endif;
-                    ?>
+                    <?php endwhile; endif; ?>
+
+                    <?php if (!$has_activity): ?>
+                        <div class="activity-item text-center py-5">
+                            <i class="bi bi-clock-history display-4 text-muted"></i>
+                            <h6 class="text-muted mt-3">No hay actividad reciente</h6>
+                            <p class="text-muted small">La actividad del sistema aparecerá aquí</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="stats-card">
+                            <h5 class="mb-3"><i class="bi bi-lightning me-2"></i>Acciones Rápidas</h5>
+                            <div class="row">
+                                <div class="col-md-3 mb-2">
+                                    <a href="usuarios.php" class="btn btn-outline-primary btn-custom w-100">
+                                        <i class="bi bi-person-plus me-2"></i>Crear Usuario
+                                    </a>
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <a href="propiedades.php" class="btn btn-outline-success btn-custom w-100">
+                                        <i class="bi bi-house-add me-2"></i>Nueva Propiedad
+                                    </a>
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <a href="personalizar.php" class="btn btn-outline-info btn-custom w-100">
+                                        <i class="bi bi-palette me-2"></i>Personalizar
+                                    </a>
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <a href="../index.php" class="btn btn-outline-secondary btn-custom w-100">
+                                        <i class="bi bi-eye me-2"></i>Ver Sitio
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
