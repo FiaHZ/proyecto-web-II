@@ -130,6 +130,16 @@
 .nav-links a:hover i.bi-box-arrow-right {
   transform: scale(1.1);
 }
+.nav-links a i.bi-house-gear {
+  display: inline-block;
+  font-size: 35px;
+  color: white;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.nav-links a:hover i.bi-house-gear {
+  transform: scale(1.1);
+}
 
 .nav-links .bi-speedometer{
   display: inline-block;
