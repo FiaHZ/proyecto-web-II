@@ -86,7 +86,7 @@ $relacionadas_result = $stmt_rel->get_result();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/detalle_propiedades.css">">
+    <link rel="stylesheet" href="css/detalle_propiedades.css">
 </head>
 <body>
     <!-- Header -->
