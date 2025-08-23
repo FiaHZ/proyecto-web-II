@@ -75,97 +75,40 @@ $total_resultados = $propiedades->num_rows;
     <title>Resultados de Búsqueda - <?= htmlspecialchars($config['mensaje_banner']) ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        .search-header {
-            background: linear-gradient(135deg, #2c3e50, #3498db);
-            color: white;
-            padding: 80px 0 40px;
-        }
-        
-        .property-card {
-            border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            margin-bottom: 30px;
-        }
-        
-        .property-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-        
-        .property-image {
-            height: 250px;
-            object-fit: cover;
-        }
-        
-        .price-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(52, 152, 219, 0.9);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 25px;
-            font-weight: bold;
-        }
-        
-        .featured-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(241, 196, 15, 0.9);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            font-weight: bold;
-        }
-        
-        .property-details {
-            padding: 20px;
-        }
-        
-        .filter-section {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/buscar.css">
 </head>
 <body>
-    <!-- Header de Búsqueda -->
-    <div class="search-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h1>Resultados de Búsqueda</h1>
-                    <p class="lead">
-                        <?php if (!empty($termino)): ?>
-                            Mostrando resultados para: <strong>"<?= htmlspecialchars($termino) ?>"</strong>
-                        <?php else: ?>
-                            Explorando todas las propiedades disponibles
-                        <?php endif; ?>
-                    </p>
-                    <p>Se encontraron <strong><?= $total_resultados ?></strong> propiedades</p>
+    <div class="container-fluid">
+        <!-- Header de Búsqueda -->
+        <div class="search-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1><i class="bi bi-search me-3"></i>Resultados de Búsqueda</h1>
+                        <p class="lead mb-2">
+                            <?php if (!empty($termino)): ?>
+                                Mostrando resultados para: <strong>"<?= htmlspecialchars($termino) ?>"</strong>
+                            <?php else: ?>
+                                Explorando todas las propiedades disponibles
+                            <?php endif; ?>
+                        </p>
+                        <p class="mb-0">Se encontraron <strong><?= $total_resultados ?></strong> propiedades</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="container my-5">
         <!-- Filtros de Búsqueda -->
         <div class="filter-section">
-            <h5 class="mb-3"><i class="bi bi-funnel me-2"></i> Filtros de Búsqueda</h5>
+            <h5 class="mb-4"><i class="bi bi-funnel me-2"></i> Filtros de Búsqueda</h5>
             <form method="GET" action="buscar.php">
-                <div class="row">
+                <div class="row g-3">
                     <div class="col-md-3">
+                        <label class="form-label">Término de búsqueda</label>
                         <input type="text" class="form-control" name="q" placeholder="Buscar..." value="<?= htmlspecialchars($termino) ?>">
                     </div>
                     <div class="col-md-2">
+                        <label class="form-label">Tipo</label>
                         <select class="form-select" name="tipo">
                             <option value="">Todos los tipos</option>
                             <option value="venta" <?= $tipo == 'venta' ? 'selected' : '' ?>>Venta</option>
@@ -173,6 +116,7 @@ $total_resultados = $propiedades->num_rows;
                         </select>
                     </div>
                     <div class="col-md-2">
+                        <label class="form-label">Categoría</label>
                         <select class="form-select" name="categoria">
                             <option value="">Todas las categorías</option>
                             <option value="casa" <?= $categoria == 'casa' ? 'selected' : '' ?>>Casa</option>
@@ -183,13 +127,15 @@ $total_resultados = $propiedades->num_rows;
                         </select>
                     </div>
                     <div class="col-md-2">
+                        <label class="form-label">Precio mínimo</label>
                         <input type="number" class="form-control" name="precio_min" placeholder="Precio mín." value="<?= $precio_min ?>">
                     </div>
                     <div class="col-md-2">
+                        <label class="form-label">Precio máximo</label>
                         <input type="number" class="form-control" name="precio_max" placeholder="Precio máx." value="<?= $precio_max ?>">
                     </div>
-                    <div class="col-md-1">
-                        <button type="submit" class="btn btn-primary w-100">
+                    <div class="col-md-1 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary btn-custom w-100">
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
@@ -201,7 +147,7 @@ $total_resultados = $propiedades->num_rows;
         <div class="row">
             <?php if ($total_resultados > 0): ?>
                 <?php while ($propiedad = $propiedades->fetch_assoc()): ?>
-                <div class="col-lg-4 col-md-6">
+                <div class="col-xl-4 col-lg-6 col-md-6 mb-4">
                     <div class="card property-card">
                         <div class="position-relative">
                             <?php if ($propiedad['imagen_destacada']): ?>
@@ -213,7 +159,9 @@ $total_resultados = $propiedades->num_rows;
                             <?php endif; ?>
                             
                             <?php if ($propiedad['destacada']): ?>
-                                <span class="featured-badge">Destacada</span>
+                                <span class="featured-badge">
+                                    <i class="bi bi-star-fill me-1"></i>Destacada
+                                </span>
                             <?php endif; ?>
                             
                             <span class="price-badge">
@@ -222,18 +170,18 @@ $total_resultados = $propiedades->num_rows;
                         </div>
                         
                         <div class="property-details">
-                            <h5 class="card-title">
+                            <h5 class="card-title mb-3">
                                 <a href="propiedad.php?id=<?= $propiedad['id'] ?>" class="text-decoration-none text-dark">
                                     <?= htmlspecialchars($propiedad['titulo']) ?>
                                 </a>
                             </h5>
                             
-                            <p class="text-muted mb-2">
-                                <i class="bi bi-geo-alt me-1"></i>
+                            <p class="text-muted mb-3">
+                                <i class="bi bi-geo-alt me-2"></i>
                                 <?= htmlspecialchars($propiedad['ubicacion']) ?>
                             </p>
                             
-                            <p class="card-text"><?= htmlspecialchars(substr($propiedad['descripcion_breve'], 0, 100)) ?>...</p>
+                            <p class="card-text mb-3"><?= htmlspecialchars(substr($propiedad['descripcion_breve'], 0, 100)) ?>...</p>
                             
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <div class="property-features">
@@ -255,7 +203,7 @@ $total_resultados = $propiedades->num_rows;
                                 </div>
                             </div>
                             
-                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
                                 <small class="text-muted">
                                     <i class="bi bi-person me-1"></i>
                                     <?= htmlspecialchars($propiedad['vendedor_nombre']) ?>
@@ -266,8 +214,8 @@ $total_resultados = $propiedades->num_rows;
                             </div>
                             
                             <div class="mt-3">
-                                <a href="propiedad.php?id=<?= $propiedad['id'] ?>" class="btn btn-primary w-100">
-                                    Ver Detalles <i class="bi bi-arrow-right ms-1"></i>
+                                <a href="propiedad.php?id=<?= $propiedad['id'] ?>" class="btn btn-primary btn-custom w-100">
+                                    Ver Detalles <i class="bi bi-arrow-right ms-2"></i>
                                 </a>
                             </div>
                         </div>
@@ -276,19 +224,21 @@ $total_resultados = $propiedades->num_rows;
                 <?php endwhile; ?>
             <?php else: ?>
                 <div class="col-12">
-                    <div class="text-center py-5">
+                    <div class="no-results">
                         <i class="bi bi-search text-muted" style="font-size: 4rem;"></i>
                         <h3 class="mt-3">No se encontraron propiedades</h3>
-                        <p class="text-muted">Intenta con otros criterios de búsqueda</p>
-                        <a href="index.php" class="btn btn-primary">Volver al Inicio</a>
+                        <p class="text-muted mb-4">Intenta con otros criterios de búsqueda</p>
+                        <a href="index.php" class="btn btn-primary btn-custom">
+                            <i class="bi bi-house me-2"></i>Volver al Inicio
+                        </a>
                     </div>
                 </div>
             <?php endif; ?>
         </div>
         
         <!-- Botón Volver -->
-        <div class="text-center mt-4">
-            <a href="index.php" class="btn btn-outline-primary">
+        <div class="text-center mt-5">
+            <a href="index.php" class="btn btn-outline-primary btn-custom">
                 <i class="bi bi-arrow-left me-2"></i> Volver al Inicio
             </a>
         </div>
