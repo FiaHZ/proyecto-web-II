@@ -61,7 +61,7 @@ $reservas_recientes_result = $stmt_res->get_result();
     <title>Panel Vendedor - Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../proyecto-web-II/css/dashboardvendedor.css">
+    <link rel="stylesheet" href="../css/dashboardvendedor.css">
 </head>
 <body>
     <div class="container-fluid">
@@ -84,10 +84,6 @@ $reservas_recientes_result = $stmt_res->get_result();
                         </a>
                         <a class="nav-link" href="perfil.php">
                             <i class="bi bi-person me-2"></i> Mi Perfil
-                        </a>
-                        <hr class="my-3">
-                        <a class="nav-link text-light" href="../index.php">
-                            <i class="bi bi-house-door me-2"></i> Ver Sitio Web
                         </a>
                         <hr class="my-3">
                         <a class="nav-link text-light" href="../index.php">
@@ -303,10 +299,7 @@ $reservas_recientes_result = $stmt_res->get_result();
                                             Actualizar Perfil
                                         </a>
                                     </div>
-                                    <div class="col-md-3 mb-3">
-                                        <a href="../index.php" class="btn btn-outline-success btn-custom w-100">
-                                            <i class="bi bi-eye me-2"></i>
-                                            Ver Sitio Web
+                                    
                                         </a>
                                     </div>
                                 </div>

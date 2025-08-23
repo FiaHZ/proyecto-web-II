@@ -1,219 +1,108 @@
 :root {
-    --primary-color: #667eea;
-    --secondary-color: #764ba2;
-    --success-color: #28a745;
-    --warning-color: #ffc107;
-    --danger-color: #dc3545;
-    --info-color: #17a2b8;
+    --primary: #28a745;
+    --secondary: #20c997;
+    --background: #f8f9fa;
+    --text-light: #f8f9fa;
+    --text-dark: #212529;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-body {
-    background-color: #f8f9fa;
-}
-
+/* Sidebar */
 .sidebar {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     min-height: 100vh;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    color: white;
 }
-
 .sidebar .nav-link {
-    color: rgba(255, 255, 255, 0.8);
-    padding: 12px 20px;
-    margin: 5px 0;
-    border-radius: 10px;
+    color: #d4edda;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
     transition: all 0.3s ease;
 }
-
-.sidebar .nav-link:hover, 
+.sidebar .nav-link:hover,
 .sidebar .nav-link.active {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.2);
     color: white;
     transform: translateX(5px);
 }
 
+/* Main Content */
 .main-content {
-    padding: 30px;
-    min-height: 100vh;
+    background-color: var(--background);
+    padding: 2rem;
 }
 
-.header-section {
-    background: white;
-    padding: 20px;
+/* Profile Header */
+.profile-header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
     border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+}
+.profile-avatar {
+    font-size: 4rem;
+    margin-bottom: 1rem;
 }
 
+/* Cards de estadísticas */
 .stats-card {
     background: white;
-    padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-    height: 100%;
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: none;
 }
-
 .stats-card:hover {
     transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
 }
 
-.stats-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
+/* Secciones de formularios */
+.form-section {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+}
+.form-section:hover {
+    transform: translateY(-3px);
 }
 
+/* Botones */
 .btn-custom {
     border-radius: 25px;
-    padding: 10px 25px;
-    font-weight: 600;
+    padding: 0.5rem 1.5rem;
     transition: all 0.3s ease;
 }
-
 .btn-custom:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.recent-activity {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-}
-
-.activity-item {
-    padding: 15px;
-    border-bottom: 1px solid #f0f0f0;
-    transition: background-color 0.3s ease;
-}
-
-.activity-item:hover {
-    background-color: #f8f9fa;
-    border-radius: 10px;
-}
-
-.activity-item:last-child {
-    border-bottom: none;
-}
-
-.sidebar-logo img {
-    filter: brightness(0) invert(1);
-}
-
-/* Estilos específicos para la página de perfil */
-
-/* Secciones del perfil */
-.profile-section {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
-    transition: transform 0.3s ease;
-}
-
-.profile-section:hover {
-    transform: translateY(-5px);
-}
-
-.profile-section h4 {
-    color: #333;
-    font-weight: 600;
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 15px;
-}
-
-/* Avatar del perfil */
-.profile-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    color: white;
-    font-size: 2rem;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-}
-
-.profile-avatar:hover {
-    transform: scale(1.1);
-}
-
-/* Formularios */
-.form-control, .form-select {
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    transition: all 0.3s ease;
-}
-
-.form-control:focus, .form-select:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
-}
-
-.form-control:hover {
-    border-color: #bbb;
-}
-
-.form-label {
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 8px;
-}
-
-/* Alertas */
-.alert {
-    border-radius: 15px;
-    border: none;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
 /* Badges */
 .badge {
-    border-radius: 10px;
-    padding: 8px 12px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    border-radius: 12px;
+    padding: 0.4rem 0.8rem;
+    font-weight: 500;
+    font-size: 0.9rem;
 }
 
-/* Información de cuenta */
-.profile-section hr {
-    border-top: 1px solid #f0f0f0;
-    margin: 20px 0;
+/* Acciones rápidas */
+.form-section .btn {
+    border-radius: 15px;
+    font-size: 0.9rem;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
 }
-
-.profile-section .d-flex {
-    margin-bottom: 8px;
-}
-
-.profile-section .d-flex:last-child {
-    margin-bottom: 0;
-}
-
-/* Responsive para clientes sin sidebar */
-@media (max-width: 768px) {
-    .main-content {
-        padding: 20px;
-    }
-    
-    .profile-section {
-        padding: 20px;
-    }
-    
-    .profile-avatar {
-        width: 60px;
-        height: 60px;
-        font-size: 1.5rem;
-    }
+.form-section .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
 }

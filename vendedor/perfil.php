@@ -117,6 +117,7 @@ $stats = $stats_result->fetch_assoc();
     <title>Mi Perfil - Panel Vendedor</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/perfil.css">
 </head>
 <body>
     <div class="container-fluid">
@@ -144,10 +145,7 @@ $stats = $stats_result->fetch_assoc();
                         <a class="nav-link text-light" href="../index.php">
                             <i class="bi bi-house-door me-2"></i> Ver Sitio Web
                         </a>
-                        <hr class="my-3">
-                        <a class="nav-link text-light" href="../index.php">
-                            <i class="bi bi-house-door me-2"></i> Ver Sitio Web
-                        <a class="nav-link text-danger" href="../logout.php">
+                        <a class="nav-link text-warning" href="../logout.php">
                             <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
                         </a>
                     </nav>
