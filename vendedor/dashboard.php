@@ -8,125 +8,49 @@ if (!isset($_SESSION["usuario_rol"]) || $_SESSION["usuario_rol"] !== "vendedor")
     exit;
 }
 
-$mensaje = "";
-$tipo_mensaje = "";
+$vendedor_id = $_SESSION["usuario_id"];
 
-// Procesar acciones
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['crear_propiedad'])) {
-        $tipo = $_POST['tipo'];
-        $categoria = $_POST['categoria'];
-        $destacada = isset($_POST['destacada']) ? 1 : 0;
-        $titulo = $_POST['titulo'];
-        $descripcion_breve = $_POST['descripcion_breve'];
-        $descripcion_larga = $_POST['descripcion_larga'];
-        $precio = $_POST['precio'];
-        $ubicacion = $_POST['ubicacion'];
-        $direccion_completa = $_POST['direccion_completa'];
-        $mapa = $_POST['mapa'];
-        $habitaciones = $_POST['habitaciones'];
-        $banos = $_POST['banos'];
-        $area_m2 = $_POST['area_m2'];
-        $parqueos = $_POST['parqueos'];
-        $vendedor_id = $_SESSION["usuario_id"];
-
-        $imagen_destacada = "";
-        if (isset($_FILES['imagen_destacada']) && $_FILES['imagen_destacada']['error'] == 0) {
-            $extension = pathinfo($_FILES['imagen_destacada']['name'], PATHINFO_EXTENSION);
-            $imagen_destacada = "propiedad_" . time() . "." . $extension;
-            move_uploaded_file($_FILES['imagen_destacada']['tmp_name'], "../img/" . $imagen_destacada);
-        }
-
-        $insert_query = "INSERT INTO propiedades (tipo, categoria, destacada, titulo, descripcion_breve, descripcion_larga, precio, ubicacion, direccion_completa, mapa, imagen_destacada, habitaciones, banos, area_m2, parqueos, vendedor_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $insert_stmt = $conn->prepare($insert_query);
-        $insert_stmt->bind_param("ssisssdssssiidii", $tipo, $categoria, $destacada, $titulo, $descripcion_breve, $descripcion_larga, $precio, $ubicacion, $direccion_completa, $mapa, $imagen_destacada, $habitaciones, $banos, $area_m2, $parqueos, $vendedor_id);
-        
-        if ($insert_stmt->execute()) {
-            $mensaje = "Propiedad creada exitosamente";
-            $tipo_mensaje = "success";
-        } else {
-            $mensaje = "Error al crear propiedad: " . $conn->error;
-            $tipo_mensaje = "danger";
-        }
-    }
-
-    if (isset($_POST['actualizar_propiedad'])) {
-        $id = $_POST['id'];
-        $tipo = $_POST['tipo'];
-        $categoria = $_POST['categoria'];
-        $destacada = isset($_POST['destacada']) ? 1 : 0;
-        $titulo = $_POST['titulo'];
-        $descripcion_breve = $_POST['descripcion_breve'];
-        $descripcion_larga = $_POST['descripcion_larga'];
-        $precio = $_POST['precio'];
-        $ubicacion = $_POST['ubicacion'];
-        $direccion_completa = $_POST['direccion_completa'];
-        $mapa = $_POST['mapa'];
-        $habitaciones = $_POST['habitaciones'];
-        $banos = $_POST['banos'];
-        $area_m2 = $_POST['area_m2'];
-        $parqueos = $_POST['parqueos'];
-
-        $update_query = "UPDATE propiedades SET tipo = ?, categoria = ?, destacada = ?, titulo = ?, descripcion_breve = ?, descripcion_larga = ?, precio = ?, ubicacion = ?, direccion_completa = ?, mapa = ?, habitaciones = ?, banos = ?, area_m2 = ?, parqueos = ? WHERE id = ? AND vendedor_id = ?";
-        $update_stmt = $conn->prepare($update_query);
-        $update_stmt->bind_param("ssisssdsssiiidii", $tipo, $categoria, $destacada, $titulo, $descripcion_breve, $descripcion_larga, $precio, $ubicacion, $direccion_completa, $mapa, $habitaciones, $banos, $area_m2, $parqueos, $id, $_SESSION["usuario_id"]);
-        
-        // Manejo de imagen si se subió una nueva
-        if (isset($_FILES['imagen_destacada']) && $_FILES['imagen_destacada']['error'] == 0) {
-            $extension = pathinfo($_FILES['imagen_destacada']['name'], PATHINFO_EXTENSION);
-            $imagen_destacada = "propiedad_" . time() . "." . $extension;
-            move_uploaded_file($_FILES['imagen_destacada']['tmp_name'], "../img/" . $imagen_destacada);
-            
-            $update_img_query = "UPDATE propiedades SET imagen_destacada = ? WHERE id = ? AND vendedor_id = ?";
-            $update_img_stmt = $conn->prepare($update_img_query);
-            $update_img_stmt->bind_param("sii", $imagen_destacada, $id, $_SESSION["usuario_id"]);
-            $update_img_stmt->execute();
-        }
-        
-        if ($update_stmt->execute()) {
-            $mensaje = "Propiedad actualizada exitosamente";
-            $tipo_mensaje = "success";
-        } else {
-            $mensaje = "Error al actualizar propiedad";
-            $tipo_mensaje = "danger";
-        }
-    }
-
-    if (isset($_POST['eliminar_propiedad'])) {
-        $id = $_POST['id'];
-        
-        $delete_query = "DELETE FROM propiedades WHERE id = ? AND vendedor_id = ?";
-        $delete_stmt = $conn->prepare($delete_query);
-        $delete_stmt->bind_param("ii", $id, $_SESSION["usuario_id"]);
-        
-        if ($delete_stmt->execute()) {
-            $mensaje = "Propiedad eliminada exitosamente";
-            $tipo_mensaje = "success";
-        } else {
-            $mensaje = "Error al eliminar propiedad";
-            $tipo_mensaje = "danger";
-        }
-    }
-}
-
-// Obtener propiedades del vendedor
-$propiedades_query = "SELECT * FROM propiedades WHERE vendedor_id = ? ORDER BY fecha_creacion DESC";
-$propiedades_stmt = $conn->prepare($propiedades_query);
-$propiedades_stmt->bind_param("i", $_SESSION["usuario_id"]);
-$propiedades_stmt->execute();
-$propiedades_result = $propiedades_stmt->get_result();
-
-// Estadísticas del vendedor
+// Obtener estadísticas del vendedor
 $stats_query = "SELECT 
     COUNT(*) as total_propiedades,
-    COUNT(CASE WHEN tipo = 'venta' THEN 1 END) as total_ventas,
-    COUNT(CASE WHEN tipo = 'alquiler' THEN 1 END) as total_alquileres,
-    COUNT(CASE WHEN destacada = 1 THEN 1 END) as total_destacadas
-FROM propiedades WHERE vendedor_id = ?";
-$stats_stmt = $conn->prepare($stats_query);
-$stats_stmt->bind_param("i", $_SESSION["usuario_id"]);
-$stats_stmt->execute();
-$stats = $stats_stmt->get_result()->fetch_assoc();
+    SUM(CASE WHEN estado = 'disponible' THEN 1 ELSE 0 END) as disponibles,
+    SUM(CASE WHEN estado = 'vendida' OR estado = 'alquilada' THEN 1 ELSE 0 END) as vendidas,
+    SUM(CASE WHEN destacada = 1 THEN 1 ELSE 0 END) as destacadas
+    FROM propiedades WHERE vendedor_id = ?";
+$stmt_stats = $conn->prepare($stats_query);
+$stmt_stats->bind_param("i", $vendedor_id);
+$stmt_stats->execute();
+$stats_result = $stmt_stats->get_result();
+$stats = $stats_result->fetch_assoc();
+
+// Obtener reservas pendientes
+$reservas_query = "SELECT COUNT(*) as reservas_pendientes 
+    FROM reservas r 
+    INNER JOIN propiedades p ON r.propiedad_id = p.id 
+    WHERE p.vendedor_id = ? AND r.estado = 'pendiente'";
+$stmt_reservas = $conn->prepare($reservas_query);
+$stmt_reservas->bind_param("i", $vendedor_id);
+$stmt_reservas->execute();
+$reservas_result = $stmt_reservas->get_result();
+$reservas_stats = $reservas_result->fetch_assoc();
+
+// Obtener propiedades recientes del vendedor
+$propiedades_query = "SELECT * FROM propiedades WHERE vendedor_id = ? ORDER BY fecha_creacion DESC LIMIT 5";
+$stmt_prop = $conn->prepare($propiedades_query);
+$stmt_prop->bind_param("i", $vendedor_id);
+$stmt_prop->execute();
+$propiedades_result = $stmt_prop->get_result();
+
+// Obtener reservas recientes
+$reservas_recientes_query = "SELECT r.*, p.titulo as propiedad_titulo, p.precio, p.tipo 
+    FROM reservas r 
+    INNER JOIN propiedades p ON r.propiedad_id = p.id 
+    WHERE p.vendedor_id = ? 
+    ORDER BY r.fecha_reserva DESC LIMIT 5";
+$stmt_res = $conn->prepare($reservas_recientes_query);
+$stmt_res->bind_param("i", $vendedor_id);
+$stmt_res->execute();
+$reservas_recientes_result = $stmt_res->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -134,7 +58,7 @@ $stats = $stats_stmt->get_result()->fetch_assoc();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Agente de Ventas</title>
+    <title>Panel Vendedor - Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="../proyecto-web-II/css/dashboardvendedor.css">
@@ -162,7 +86,10 @@ $stats = $stats_stmt->get_result()->fetch_assoc();
                             <i class="bi bi-person me-2"></i> Mi Perfil
                         </a>
                         <hr class="my-3">
-                        <a class="nav-link text-danger" href="../logout.php">
+                        <a class="nav-link text-light" href="../index.php">
+                            <i class="bi bi-house-door me-2"></i> Ver Sitio Web
+                        </a>
+                        <a class="nav-link text-warning" href="../logout.php">
                             <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
                         </a>
                     </nav>
@@ -171,294 +98,223 @@ $stats = $stats_stmt->get_result()->fetch_assoc();
 
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 main-content">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div>
-                        <h2>Panel de Agente de Ventas</h2>
-                        <p class="text-muted">Gestiona tus propiedades y perfil</p>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary btn-custom me-2" data-bs-toggle="modal" data-bs-target="#crearPropiedadModal">
-                            <i class="bi bi-plus-circle me-2"></i> Nueva Propiedad
-                        </button>
-                        <button class="btn btn-outline-primary btn-custom" onclick="location.href='../index.php'">
-                            <i class="bi bi-house me-2"></i> Ver Sitio Web
-                        </button>
+                <!-- Welcome Card -->
+                <div class="welcome-card">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h2 class="mb-2">¡Bienvenido, <?= $_SESSION["usuario_nombre"] ?>!</h2>
+                            <p class="mb-0">Gestiona tus propiedades y reservas desde tu panel personalizado</p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <i class="bi bi-house-heart" style="font-size: 4rem; opacity: 0.3;"></i>
+                        </div>
                     </div>
                 </div>
-
-                <?php if ($mensaje): ?>
-                    <div class="alert alert-<?= $tipo_mensaje ?> alert-dismissible fade show" role="alert">
-                        <i class="bi bi-<?= $tipo_mensaje == 'success' ? 'check-circle' : 'exclamation-triangle' ?> me-2"></i>
-                        <?= $mensaje ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                <?php endif; ?>
 
                 <!-- Statistics Cards -->
                 <div class="row mb-4">
-                    <div class="col-md-3 mb-3">
-                        <div class="stats-card primary text-center">
-                            <i class="bi bi-house-door text-primary" style="font-size: 2rem;"></i>
-                            <h5 class="mt-2">Total Propiedades</h5>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="stats-card">
+                            <div class="stats-icon" style="background: linear-gradient(135deg, #007bff, #0056b3);">
+                                <i class="bi bi-house"></i>
+                            </div>
                             <h3 class="text-primary"><?= $stats['total_propiedades'] ?></h3>
+                            <p class="text-muted mb-0">Total Propiedades</p>
                         </div>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="stats-card success text-center">
-                            <i class="bi bi-currency-dollar text-success" style="font-size: 2rem;"></i>
-                            <h5 class="mt-2">En Venta</h5>
-                            <h3 class="text-success"><?= $stats['total_ventas'] ?></h3>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="stats-card">
+                            <div class="stats-icon" style="background: linear-gradient(135deg, #28a745, #20c997);">
+                                <i class="bi bi-check-circle"></i>
+                            </div>
+                            <h3 class="text-success"><?= $stats['disponibles'] ?></h3>
+                            <p class="text-muted mb-0">Disponibles</p>
                         </div>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="stats-card secondary text-center">
-                            <i class="bi bi-key text-info" style="font-size: 2rem;"></i>
-                            <h5 class="mt-2">En Alquiler</h5>
-                            <h3 class="text-info"><?= $stats['total_alquileres'] ?></h3>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="stats-card">
+                            <div class="stats-icon" style="background: linear-gradient(135deg, #ffc107, #fd7e14);">
+                                <i class="bi bi-star"></i>
+                            </div>
+                            <h3 class="text-warning"><?= $stats['destacadas'] ?></h3>
+                            <p class="text-muted mb-0">Destacadas</p>
                         </div>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="stats-card warning text-center">
-                            <i class="bi bi-star text-warning" style="font-size: 2rem;"></i>
-                            <h5 class="mt-2">Destacadas</h5>
-                            <h3 class="text-warning"><?= $stats['total_destacadas'] ?></h3>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="stats-card">
+                            <div class="stats-icon" style="background: linear-gradient(135deg, #dc3545, #c82333);">
+                                <i class="bi bi-calendar-event"></i>
+                            </div>
+                            <h3 class="text-danger"><?= $reservas_stats['reservas_pendientes'] ?></h3>
+                            <p class="text-muted mb-0">Reservas Pendientes</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Lista de Propiedades -->
                 <div class="row">
-                    <div class="col-12">
-                        <h4 class="mb-3">Mis Propiedades Recientes</h4>
-                        <?php if ($propiedades_result->num_rows > 0): ?>
-                            <?php while ($propiedad = $propiedades_result->fetch_assoc()): ?>
-                            <div class="property-card">
-                                <div class="row align-items-center">
-                                    <div class="col-md-2">
-                                        <?php if ($propiedad['imagen_destacada']): ?>
-                                            <img src="../img/<?= $propiedad['imagen_destacada'] ?>" alt="Propiedad" class="property-image">
-                                        <?php else: ?>
-                                            <div class="property-image d-flex align-items-center justify-content-center bg-light">
-                                                <i class="bi bi-image text-muted"></i>
+                    <!-- Propiedades Recientes -->
+                    <div class="col-lg-7">
+                        <div class="recent-card">
+                            <div class="card-header bg-transparent">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">
+                                        <i class="bi bi-house-door me-2 text-primary"></i>
+                                        Mis Propiedades Recientes
+                                    </h5>
+                                    <a href="propiedades.php" class="btn btn-outline-primary btn-sm btn-custom">
+                                        Ver todas
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <?php if ($propiedades_result->num_rows > 0): ?>
+                                    <?php while ($propiedad = $propiedades_result->fetch_assoc()): ?>
+                                        <div class="property-mini-card p-3 mb-3 bg-light rounded">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2">
+                                                    <img src="../img/<?= $propiedad['imagen_destacada'] ?? 'prop-dest1.png' ?>" 
+                                                         class="img-fluid rounded" alt="Propiedad">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h6 class="mb-1"><?= htmlspecialchars($propiedad['titulo']) ?></h6>
+                                                    <small class="text-muted">
+                                                        <i class="bi bi-geo-alt"></i> <?= htmlspecialchars($propiedad['ubicacion']) ?>
+                                                    </small>
+                                                    <br>
+                                                    <span class="badge bg-<?= $propiedad['tipo'] == 'venta' ? 'success' : 'info' ?> me-1">
+                                                        <?= ucfirst($propiedad['tipo']) ?>
+                                                    </span>
+                                                    <span class="badge bg-<?= $propiedad['estado'] == 'disponible' ? 'success' : 'secondary' ?>">
+                                                        <?= ucfirst($propiedad['estado']) ?>
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-3 text-end">
+                                                    <h6 class="text-primary mb-1">
+                                                        $<?= number_format($propiedad['precio'], 0, ',', '.') ?>
+                                                    </h6>
+                                                    <small class="text-muted">
+                                                        <?= date('d/m/Y', strtotime($propiedad['fecha_creacion'])) ?>
+                                                    </small>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" 
+                                                                type="button" data-bs-toggle="dropdown">
+                                                            <i class="bi bi-three-dots-vertical"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a class="dropdown-item" href="../detalle_propiedad.php?id=<?= $propiedad['id'] ?>" target="_blank">
+                                                                <i class="bi bi-eye me-2"></i>Ver
+                                                            </a></li>
+                                                            <li><a class="dropdown-item" href="editar_propiedad.php?id=<?= $propiedad['id'] ?>">
+                                                                <i class="bi bi-pencil me-2"></i>Editar
+                                                            </a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        <?php endif; ?>
+                                        </div>
+                                    <?php endwhile; ?>
+                                <?php else: ?>
+                                    <div class="text-center py-4">
+                                        <i class="bi bi-house-x display-4 text-muted"></i>
+                                        <p class="text-muted mt-2">No tienes propiedades registradas</p>
+                                        <a href="propiedades.php" class="btn btn-primary btn-custom">
+                                            <i class="bi bi-plus-circle me-2"></i>Agregar Primera Propiedad
+                                        </a>
                                     </div>
-                                    <div class="col-md-6">
-                                        <h5 class="mb-1">
-                                            <?= htmlspecialchars($propiedad['titulo']) ?>
-                                            <?php if ($propiedad['destacada']): ?>
-                                                <span class="badge bg-warning ms-2">Destacada</span>
-                                            <?php endif; ?>
-                                        </h5>
-                                        <p class="text-muted mb-1">
-                                            <i class="bi bi-geo-alt me-1"></i> <?= htmlspecialchars($propiedad['ubicacion']) ?>
-                                        </p>
-                                        <p class="mb-1">
-                                            <span class="badge bg-<?= $propiedad['tipo'] == 'venta' ? 'success' : 'info' ?>">
-                                                <?= ucfirst($propiedad['tipo']) ?>
-                                            </span>
-                                            <small class="text-muted ms-2"><?= ucfirst($propiedad['categoria']) ?></small>
-                                        </p>
-                                    </div>
-                                    <div class="col-md-2 text-center">
-                                        <h5 class="text-primary mb-0">
-                                            $<?= number_format($propiedad['precio'], 0) ?>
-                                        </h5>
-                                        <small class="text-muted">
-                                            <?= $propiedad['tipo'] == 'venta' ? '' : '/mes' ?>
-                                        </small>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button class="btn btn-sm btn-outline-primary btn-custom mb-1 w-100" 
-                                                onclick="editarPropiedad(<?= $propiedad['id'] ?>)">
-                                            <i class="bi bi-pencil"></i> Editar
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger btn-custom w-100" 
-                                                onclick="eliminarPropiedad(<?= $propiedad['id'] ?>, '<?= htmlspecialchars($propiedad['titulo']) ?>')">
-                                            <i class="bi bi-trash"></i> Eliminar
-                                        </button>
-                                    </div>
-                                </div>
+                                <?php endif; ?>
                             </div>
-                            <?php endwhile; ?>
-                        <?php else: ?>
-                            <div class="text-center py-5">
-                                <i class="bi bi-house-door text-muted" style="font-size: 4rem;"></i>
-                                <h4 class="text-muted mt-3">No tienes propiedades aún</h4>
-                                <p class="text-muted">Comienza agregando tu primera propiedad</p>
-                                <button class="btn btn-primary btn-custom" data-bs-toggle="modal" data-bs-target="#crearPropiedadModal">
-                                    <i class="bi bi-plus-circle me-2"></i> Crear Primera Propiedad
-                                </button>
-                            </div>
-                        <?php endif; ?>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Modal Crear Propiedad -->
-    <div class="modal fade" id="crearPropiedadModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i> Nueva Propiedad</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- Reservas Recientes -->
+                    <div class="col-lg-5">
+                        <div class="recent-card">
+                            <div class="card-header bg-transparent">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-calendar-check me-2 text-info"></i>
+                                    Reservas Recientes
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <?php if ($reservas_recientes_result->num_rows > 0): ?>
+                                    <?php while ($reserva = $reservas_recientes_result->fetch_assoc()): ?>
+                                        <div class="reservation-item">
+                                            <h6 class="mb-1"><?= htmlspecialchars($reserva['propiedad_titulo']) ?></h6>
+                                            <p class="mb-1 small text-muted">
+                                                <strong>Interés:</strong> <?= ucfirst($reserva['tipo_interes']) ?>
+                                                <span class="badge bg-<?= $reserva['estado'] == 'pendiente' ? 'warning' : 'success' ?> ms-2">
+                                                    <?= ucfirst($reserva['estado']) ?>
+                                                </span>
+                                            </p>
+                                            <p class="mb-1 small">
+                                                <?= htmlspecialchars(substr($reserva['mensaje'], 0, 80)) ?>...
+                                            </p>
+                                            <small class="text-muted">
+                                                <i class="bi bi-clock"></i> <?= date('d/m/Y H:i', strtotime($reserva['fecha_reserva'])) ?>
+                                            </small>
+                                        </div>
+                                    <?php endwhile; ?>
+                                <?php else: ?>
+                                    <div class="text-center py-4">
+                                        <i class="bi bi-calendar-x display-4 text-muted"></i>
+                                        <p class="text-muted mt-2">No tienes reservas pendientes</p>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <form method="POST" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="tipo" class="form-label">Tipo</label>
-                                    <select class="form-select" id="tipo" name="tipo" required>
-                                        <option value="">Seleccionar...</option>
-                                        <option value="venta">Venta</option>
-                                        <option value="alquiler">Alquiler</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="categoria" class="form-label">Categoría</label>
-                                    <select class="form-select" id="categoria" name="categoria" required>
-                                        <option value="">Seleccionar...</option>
-                                        <option value="casa">Casa</option>
-                                        <option value="apartamento">Apartamento</option>
-                                        <option value="local">Local Comercial</option>
-                                        <option value="terreno">Terreno</option>
-                                        <option value="oficina">Oficina</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="titulo" class="form-label">Título</label>
-                            <input type="text" class="form-control" id="titulo" name="titulo" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="descripcion_breve" class="form-label">Descripción Breve</label>
-                            <textarea class="form-control" id="descripcion_breve" name="descripcion_breve" rows="2" required></textarea>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="descripcion_larga" class="form-label">Descripción Completa</label>
-                            <textarea class="form-control" id="descripcion_larga" name="descripcion_larga" rows="4" required></textarea>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="precio" class="form-label">Precio</label>
-                                    <input type="number" step="0.01" class="form-control" id="precio" name="precio" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="area_m2" class="form-label">Área (m²)</label>
-                                    <input type="number" step="0.01" class="form-control" id="area_m2" name="area_m2">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label for="habitaciones" class="form-label">Habitaciones</label>
-                                    <input type="number" class="form-control" id="habitaciones" name="habitaciones">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label for="banos" class="form-label">Baños</label>
-                                    <input type="number" class="form-control" id="banos" name="banos">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label for="parqueos" class="form-label">Parqueos</label>
-                                    <input type="number" class="form-control" id="parqueos" name="parqueos">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="ubicacion" class="form-label">Ubicación</label>
-                            <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="direccion_completa" class="form-label">Dirección Completa</label>
-                            <textarea class="form-control" id="direccion_completa" name="direccion_completa" rows="2"></textarea>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="mapa" class="form-label">Enlace de Mapa (Google Maps, etc.)</label>
-                            <input type="text" class="form-control" id="mapa" name="mapa">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="imagen_destacada" class="form-label">Imagen Destacada</label>
-                            <input type="file" class="form-control" id="imagen_destacada" name="imagen_destacada" accept="image/*">
-                        </div>
-                        
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="destacada" name="destacada">
-                            <label class="form-check-label" for="destacada">
-                                Marcar como propiedad destacada
-                            </label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" name="crear_propiedad" class="btn btn-primary">Crear Propiedad</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
-    <!-- Modal Eliminar Propiedad -->
-    <div class="modal fade" id="eliminarPropiedadModal" tabindex="-1">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2"></i> Confirmar Eliminación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form method="POST">
-                    <input type="hidden" id="delete_prop_id" name="id">
-                    <div class="modal-body">
-                        <p>¿Está seguro de que desea eliminar la propiedad <strong id="delete_prop_titulo"></strong>?</p>
-                        <div class="alert alert-warning">
-                            <small><i class="bi bi-exclamation-triangle me-1"></i> Esta acción no se puede deshacer.</small>
+                <!-- Acciones Rápidas -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="recent-card">
+                            <div class="card-header bg-transparent">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-lightning me-2 text-warning"></i>
+                                    Acciones Rápidas
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row text-center">
+                                    <div class="col-md-3 mb-3">
+                                        <a href="propiedades.php?action=new" class="btn btn-primary btn-custom w-100">
+                                            <i class="bi bi-plus-circle me-2"></i>
+                                            Agregar Propiedad
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <a href="propiedades.php" class="btn btn-outline-primary btn-custom w-100">
+                                            <i class="bi bi-house-gear me-2"></i>
+                                            Gestionar Propiedades
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <a href="perfil.php" class="btn btn-outline-secondary btn-custom w-100">
+                                            <i class="bi bi-person-gear me-2"></i>
+                                            Actualizar Perfil
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <a href="../index.php" class="btn btn-outline-success btn-custom w-100">
+                                            <i class="bi bi-eye me-2"></i>
+                                            Ver Sitio Web
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" name="eliminar_propiedad" class="btn btn-danger">Eliminar Propiedad</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function eliminarPropiedad(id, titulo) {
-            document.getElementById('delete_prop_id').value = id;
-            document.getElementById('delete_prop_titulo').textContent = titulo;
-            
-            const modal = new bootstrap.Modal(document.getElementById('eliminarPropiedadModal'));
-            modal.show();
-        }
-
-        function editarPropiedad(id) {
-            // Por simplicidad, redirigir a una página de edición
-            window.location.href = `editar_propiedad.php?id=${id}`;
-        }
-    </script>
 </body>
 </html>

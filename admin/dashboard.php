@@ -23,7 +23,6 @@ $stats = $stats_result->fetch_assoc();
     <title>Panel de Administración</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../proyecto-web-II/css/dashboard.css">
 </head>
 
 <body>
@@ -33,8 +32,8 @@ $stats = $stats_result->fetch_assoc();
             <div class="col-md-3 col-lg-2 sidebar">
                 <div class="p-4">
                     <div class="text-center mb-4 sidebar-logo">
-                        <img src="../img/logo.png" alt="Logo" class="img-fluid">
-                        <h5 class="text-white">Admin Panel</h5>
+                        <img src="../img/logo.png" alt="Logo" class="img-fluid" style="max-height: 50px;">
+                        <h5 class="text-white mt-2">Admin Panel</h5>
                         <p class="text-muted small">Bienvenido, <?= $_SESSION["usuario_nombre"] ?></p>
                     </div>
 
@@ -50,9 +49,6 @@ $stats = $stats_result->fetch_assoc();
                         </a>
                         <a class="nav-link" href="propiedades.php">
                             <i class="bi bi-house me-2"></i> Propiedades
-                        </a>
-                        <a class="nav-link" href="mensajes.php">
-                            <i class="bi bi-envelope me-2"></i> Mensajes
                         </a>
                         <a class="nav-link" href="perfil.php">
                             <i class="bi bi-person me-2"></i> Mi Perfil
@@ -85,7 +81,7 @@ $stats = $stats_result->fetch_assoc();
                 <!-- Statistics Cards -->
                 <div class="row mb-4">
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="stats-card primary">
+                        <div class="stats-card">
                             <div class="d-flex align-items-center">
                                 <div class="stats-icon" style="background: var(--primary-color);">
                                     <i class="bi bi-people"></i>
@@ -99,7 +95,7 @@ $stats = $stats_result->fetch_assoc();
                     </div>
 
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="stats-card secondary">
+                        <div class="stats-card">
                             <div class="d-flex align-items-center">
                                 <div class="stats-icon" style="background: var(--secondary-color);">
                                     <i class="bi bi-person-badge"></i>
@@ -113,7 +109,7 @@ $stats = $stats_result->fetch_assoc();
                     </div>
 
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="stats-card success">
+                        <div class="stats-card">
                             <div class="d-flex align-items-center">
                                 <div class="stats-icon" style="background: var(--success-color);">
                                     <i class="bi bi-house"></i>
@@ -127,7 +123,7 @@ $stats = $stats_result->fetch_assoc();
                     </div>
 
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="stats-card warning">
+                        <div class="stats-card">
                             <div class="d-flex align-items-center">
                                 <div class="stats-icon" style="background: var(--warning-color);">
                                     <i class="bi bi-calendar-event"></i>
@@ -170,46 +166,68 @@ $stats = $stats_result->fetch_assoc();
                 <div class="recent-activity">
                     <h5 class="mb-4">Actividad Reciente</h5>
                     <?php
-                    // Obtener actividad reciente
+                    // Obtener actividad reciente - CORREGIDO
                     $activity_query = "
                         SELECT 'propiedad' as tipo, titulo as descripcion, fecha_creacion as fecha, 
                                CONCAT('Nueva propiedad agregada: ', titulo) as mensaje
                         FROM propiedades 
                         ORDER BY fecha_creacion DESC 
                         LIMIT 3
-                        UNION ALL
-                        SELECT 'usuario' as tipo, nombre as descripcion, fecha_creacion as fecha,
-                               CONCAT('Nuevo usuario registrado: ', nombre) as mensaje  
-                        FROM usuarios 
-                        WHERE rol = 'cliente'
-                        ORDER BY fecha_creacion DESC 
-                        LIMIT 2
                     ";
                     $activity_result = $conn->query($activity_query);
 
-                    if ($activity_result->num_rows > 0):
+                    if ($activity_result && $activity_result->num_rows > 0):
                         while ($activity = $activity_result->fetch_assoc()):
-                            ?>
-                            <div class="activity-item">
-                                <div class="d-flex align-items-center">
-                                    <div class="me-3">
-                                        <i
-                                            class="bi <?= $activity['tipo'] == 'propiedad' ? 'bi-house' : 'bi-person' ?> text-primary"></i>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <div><?= htmlspecialchars($activity['mensaje']) ?></div>
-                                        <small class="text-muted">
-                                            <?= date('d/m/Y H:i', strtotime($activity['fecha'])) ?>
-                                        </small>
-                                    </div>
+                    ?>
+                        <div class="activity-item">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <i class="bi <?= $activity['tipo'] == 'propiedad' ? 'bi-house' : 'bi-person' ?> text-primary"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div><?= htmlspecialchars($activity['mensaje']) ?></div>
+                                    <small class="text-muted">
+                                        <?= date('d/m/Y H:i', strtotime($activity['fecha'])) ?>
+                                    </small>
                                 </div>
                             </div>
-                        <?php
+                        </div>
+                    <?php
                         endwhile;
                     else:
-                        ?>
-                        <p class="text-muted text-center">No hay actividad reciente</p>
+                    ?>
+                        <div class="activity-item">
+                            <div class="text-center">
+                                <i class="bi bi-clock-history display-4 text-muted"></i>
+                                <p class="text-muted mt-2">No hay actividad reciente</p>
+                            </div>
+                        </div>
                     <?php endif; ?>
+
+                    <?php
+                    // Agregar actividad de usuarios nuevos
+                    $users_query = "SELECT nombre, fecha_creacion FROM usuarios WHERE rol = 'cliente' ORDER BY fecha_creacion DESC LIMIT 2";
+                    $users_result = $conn->query($users_query);
+                    if ($users_result && $users_result->num_rows > 0):
+                        while ($user = $users_result->fetch_assoc()):
+                    ?>
+                        <div class="activity-item">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <i class="bi bi-person-plus text-success"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div>Nuevo usuario registrado: <?= htmlspecialchars($user['nombre']) ?></div>
+                                    <small class="text-muted">
+                                        <?= date('d/m/Y H:i', strtotime($user['fecha_creacion'])) ?>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    <?php
+                        endwhile;
+                    endif;
+                    ?>
                 </div>
             </div>
         </div>

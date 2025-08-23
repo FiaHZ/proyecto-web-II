@@ -1,0 +1,86 @@
+        .sidebar {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .sidebar .nav-link {
+            color: #bdc3c7;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .main-content {
+            background-color: #f8f9fa;
+            padding: 2rem;
+        }
+        .property-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .property-image {
+            height: 200px;
+            object-fit: cover;
+        }
+        .price-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        .status-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .status-disponible { background-color: #28a745; color: white; }
+        .status-reservada { background-color: #ffc107; color: black; }
+        .status-vendida { background-color: #dc3545; color: white; }
+        .status-alquilada { background-color: #17a2b8; color: white; }
+        .status-inactiva { background-color: #6c757d; color: white; }
+        .filter-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .btn-custom {
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            transition: all 0.3s;
+        }
+        .btn-custom:hover {
+            transform: translateY(-2px);
+        }
+        .property-actions {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+        .property-actions .btn {
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            padding: 0;
+            margin: 2px;
+        }

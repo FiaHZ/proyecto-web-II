@@ -6,27 +6,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST["nombre"];
     $telefono = $_POST["telefono"];
     $correo = $_POST["correo"];
-    $pass   = $_POST["contrasena"];
-    $confirm= $_POST["confirmar"];
+    $usuario = $_POST["usuario"] ?? $correo; // Usar usuario personalizado o correo como fallback
+    $pass = $_POST["contrasena"];
+    $confirm = $_POST["confirmar"];
 
     if ($pass !== $confirm) {
         $msg = "Las contraseñas no coinciden";
     } else {
-        // Verificar que el correo no exista
+        // Verificar que el correo o usuario no existan
         $check = "SELECT id FROM usuarios WHERE correo = ? OR usuario = ?";
         $stmt_check = $conn->prepare($check);
-        $stmt_check->bind_param("ss", $correo, $correo);
+        $stmt_check->bind_param("ss", $correo, $usuario);
         $stmt_check->execute();
         $result_check = $stmt_check->get_result();
 
         if ($result_check->num_rows > 0) {
-            $msg = "El correo ya está registrado";
+            $msg = "El correo o nombre de usuario ya está registrado";
         } else {
             $passHash = md5($pass);
 
             $sql = "INSERT INTO usuarios (nombre, telefono, correo, usuario, contrasena, rol) VALUES (?,?,?,?,?, 'cliente')";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sssss", $nombre, $telefono, $correo, $correo, $passHash);
+            $stmt->bind_param("sssss", $nombre, $telefono, $correo, $usuario, $passHash);
 
             if ($stmt->execute()) {
                 $msg = "<span style='color: green;'>Usuario registrado con éxito. Ahora puede iniciar sesión.</span>";
@@ -43,8 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Registrar</title>
-    <link rel="stylesheet" href="../proyecto-web-II/css/registrar.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/registrar.css">
 </head>
 <body>
     <div class="login-box">
@@ -56,6 +56,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="input-box">
                 <input type="text" name="nombre" class="input-field" placeholder="Nombre completo" autocomplete="off" required>
             </div>
+            
+            <div class="input-box">
+                <input type="text" name="usuario" class="input-field" placeholder="Nombre de usuario" autocomplete="off" required>
+            </div>
+            
             <div class="input-box">
                 <input type="text" name="telefono" class="input-field" placeholder="Teléfono" autocomplete="off" required>
             </div>
@@ -71,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="input-box">
                 <input type="password" name="confirmar" class="input-field" placeholder="Confirmar contraseña" id="confirmPassword" required>
-                  <i class="bi bi-eye-slash toggle-password" id="toggleConfirmPassword"></i>
+                <i class="bi bi-eye-slash toggle-password" id="toggleConfirmPassword"></i>
             </div>
 
             <?php if ($msg): ?>
