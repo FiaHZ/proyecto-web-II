@@ -126,7 +126,7 @@ $stats = $stats_result->fetch_assoc();
             <div class="col-md-3 col-lg-2 sidebar">
                 <div class="p-4">
                     <div class="text-center mb-4">
-                        <img src="../img/logo.png" alt="Logo" class="img-fluid mb-2" style="max-height: 50px;">
+                        <img src="../img/logo.png" alt="Logo" class="img-fluid mb-2" style="max-height: 100px;">
                         <h5 class="text-white">Panel Vendedor</h5>
                         <p class="text-muted small">Bienvenido, <?= $_SESSION["usuario_nombre"] ?></p>
                     </div>
@@ -145,7 +145,7 @@ $stats = $stats_result->fetch_assoc();
                         <a class="nav-link text-light" href="../index.php">
                             <i class="bi bi-house-door me-2"></i> Ver Sitio Web
                         </a>
-                        <a class="nav-link text-warning" href="../logout.php">
+                        <a class="nav-link text-danger" href="../logout.php">
                             <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
                         </a>
                     </nav>

@@ -1,95 +1,117 @@
 /* ===== Dashboard Vendedor ===== */
+:root {
+  --primary-color: #2240c5;
+  --secondary-color: #4c50dc;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --info-color: #17a2b8;
+}
+
 .sidebar {
-    background: linear-gradient(135deg, #007bff 0%, #6f42c1 100%);
-    min-height: 100vh;
-    color: white;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+  min-height: 100vh;
+  color: white;
 }
 .sidebar .nav-link {
-    color: #e2e6ea;
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.5rem;
-    border-radius: 8px;
-    transition: all 0.3s;
+  color: #e2e6ea;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s;
 }
-.sidebar .nav-link:hover, .sidebar .nav-link.active {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    transform: translateX(5px);
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  transform: translateX(5px);
 }
 
 .main-content {
-    background-color: #f8f9fa;
-    padding: 2rem;
+  background-color: #f8f9fa;
+  padding: 2rem;
 }
 
 .stats-card {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    padding: 1.5rem;
-    text-align: center;
-    border: none;
-    transition: all 0.3s;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  border: none;
+  transition: all 0.3s;
 }
 .stats-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .stats-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-    font-size: 1.5rem;
-    color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 1.5rem;
+  color: white;
 }
 
 .recent-card {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    border: none;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: none;
 }
 
 .property-mini-card {
-    border-left: 4px solid #007bff;
-    transition: all 0.3s;
+  border-left: 4px solid #007bff;
+  transition: all 0.3s;
 }
 .property-mini-card:hover {
-    transform: translateX(5px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .reservation-item {
-    border-left: 4px solid #6f42c1;
-    background: linear-gradient(to right, #f8f9ff, #ffffff);
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 0.5rem;
-    transition: all 0.3s;
+  border-left: 4px solid #6f42c1;
+  background: linear-gradient(to right, #f8f9ff, #ffffff);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s;
 }
 .reservation-item:hover {
-    transform: translateX(5px);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transform: translateX(5px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .btn-custom {
-    border-radius: 25px;
-    padding: 0.5rem 1.5rem;
-    transition: all 0.3s;
+  border-radius: 25px;
+  padding: 0.5rem 1.5rem;
+  transition: all 0.3s;
 }
 .btn-custom:hover {
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 }
 
 .welcome-card {
-    background: linear-gradient(135deg, #007bff 0%, #6f42c1 100%);
-    color: white;
-    border-radius: 15px;
-    padding: 2rem;
-    margin-bottom: 2rem;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+  color: white;
+  border-radius: 15px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.text-muted {
+  color: black !important;
 }
