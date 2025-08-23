@@ -109,7 +109,11 @@
 .btn-custom {
   border-radius: 25px;
   padding: 0.45rem 1.2rem;
-  background: linear-gradient(45deg, var(--primary), var(--secondary));
+    background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
   color: white;
   border: none;
   font-weight: 500;

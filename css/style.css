@@ -497,6 +497,15 @@ dl, ol, ul{
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.card-propiedad,
+.card-propiedad-venta,
+.card-propiedad-alquiler {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 280px;
+  height: 420px; /* misma altura */
+}
 
 /*----FOOTER---*/
 .footer {
