@@ -255,18 +255,10 @@ $stats = $stats_result->fetch_assoc();
                                     </a>
                                 </div>
                                 <div class="col-md-3 mb-2">
-                                    <a href="propiedades.php" class="btn btn-outline-success btn-custom w-100">
-                                        <i class="bi bi-house-add me-2"></i>Nueva Propiedad
-                                    </a>
-                                </div>
-                                <div class="col-md-3 mb-2">
                                     <a href="personalizar.php" class="btn btn-outline-info btn-custom w-100">
                                         <i class="bi bi-palette me-2"></i>Personalizar
                                     </a>
                                 </div>
-                                <div class="col-md-3 mb-2">
-                                    <a href="../index.php" class="btn btn-outline-secondary btn-custom w-100">
-                                        <i class="bi bi-eye me-2"></i>Ver Sitio
                                     </a>
                                 </div>
                             </div>
