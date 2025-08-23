@@ -118,7 +118,7 @@ $alquiler_result = $conn->query($alquiler_query);
                                 <br><small><i class="bi bi-geo-alt"></i> <?= htmlspecialchars($propiedad['ubicacion']) ?></small>
                                 <br><small><i class="bi bi-house"></i> <?= $propiedad['habitaciones'] ?> hab • <i class="bi bi-droplet"></i> <?= $propiedad['banos'] ?> baños</small>
                             </p>
-                            <div class="precio-prop">
+                            <div class="precio-prop">Precio
                                 $<?= number_format($propiedad['precio'], 0, ',', '.') ?>
                                 <?= $propiedad['tipo'] == 'alquiler' ? '/mes' : '' ?>
                             </div>
@@ -154,7 +154,7 @@ $alquiler_result = $conn->query($alquiler_query);
                                 <br><small><i class="bi bi-geo-alt"></i> <?= htmlspecialchars($propiedad['ubicacion']) ?></small>
                                 <br><small><i class="bi bi-house"></i> <?= $propiedad['habitaciones'] ?> hab • <i class="bi bi-droplet"></i> <?= $propiedad['banos'] ?> baños</small>
                             </p>
-                            <div class="precio-prop-venta">
+                            <div class="precio-prop-venta">Precio
                                 $<?= number_format($propiedad['precio'], 0, ',', '.') ?>
                             </div>
                             <a href="detalle_propiedad.php?id=<?= $propiedad['id'] ?>" class="btn btn-success btn-sm mt-2">Ver Detalles</a>
@@ -189,7 +189,7 @@ $alquiler_result = $conn->query($alquiler_query);
                                 <br><small><i class="bi bi-geo-alt"></i> <?= htmlspecialchars($propiedad['ubicacion']) ?></small>
                                 <br><small><i class="bi bi-house"></i> <?= $propiedad['habitaciones'] ?> hab • <i class="bi bi-droplet"></i> <?= $propiedad['banos'] ?> baños</small>
                             </p>
-                            <div class="precio-prop-alquiler">
+                            <div class="precio-prop-alquiler">Precio
                                 $<?= number_format($propiedad['precio'], 0, ',', '.') ?>/mes
                             </div>
                             <a href="detalle_propiedad.php?id=<?= $propiedad['id'] ?>" class="btn btn-info btn-sm mt-2">Ver Detalles</a>

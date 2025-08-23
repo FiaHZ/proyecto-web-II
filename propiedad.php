@@ -212,46 +212,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['enviar_consulta'])) {
                         <span><?= htmlspecialchars($propiedad['vendedor_correo']) ?></span>
                     </div>
                 </div>
-
-                <!-- Contact Form -->
-                <div class="contact-form">
-                    <h5 class="mb-4">¿Interesado en esta propiedad?</h5>
-                    
-                    <?php if ($mensaje_contacto == "success"): ?>
-                        <div class="alert alert-success">
-                            <i class="bi bi-check-circle me-2"></i>
-                            ¡Mensaje enviado exitosamente! El agente se contactará contigo pronto.
-                        </div>
-                    <?php elseif ($mensaje_contacto == "error"): ?>
-                        <div class="alert alert-danger">
-                            <i class="bi bi-exclamation-triangle me-2"></i>
-                            Hubo un error al enviar el mensaje. Inténtalo de nuevo.
-                        </div>
-                    <?php endif; ?>
-                    
-                    <form method="POST">
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre Completo</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="correo" name="correo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono</label>
-                            <input type="text" class="form-control" id="telefono" name="telefono">
-                        </div>
-                        <div class="mb-3">
-                            <label for="mensaje" class="form-label">Mensaje</label>
-                            <textarea class="form-control" id="mensaje" name="mensaje" rows="4" 
-                                      placeholder="Estoy interesado en esta propiedad. Me gustaría más información..." required></textarea>
-                        </div>
-                        <button type="submit" name="enviar_consulta" class="btn btn-primary w-100">
-                            <i class="bi bi-send me-2"></i> Enviar Consulta
-                        </button>
-                    </form>
-                </div>
             </div>
         </div>
 

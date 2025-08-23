@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $extension = pathinfo($_FILES['imagen_destacada']['name'], PATHINFO_EXTENSION);
             $nombre_imagen = 'prop_' . time() . '.' . $extension;
             $ruta_destino = "../img/" . $nombre_imagen;
-            
+
             if (move_uploaded_file($_FILES['imagen_destacada']['tmp_name'], $ruta_destino)) {
                 $imagen_destacada = $nombre_imagen;
             }
@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $insert_query = "INSERT INTO propiedades (tipo, categoria, destacada, titulo, descripcion_breve, descripcion_larga, precio, ubicacion, direccion_completa, mapa, imagen_destacada, habitaciones, banos, area_m2, parqueos, vendedor_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insert_query);
         $stmt->bind_param("ssisssdssssiiidi", $tipo, $categoria, $destacada, $titulo, $descripcion_breve, $descripcion_larga, $precio, $ubicacion, $direccion_completa, $mapa, $imagen_destacada, $habitaciones, $banos, $area_m2, $parqueos, $vendedor_id);
-        
+
         if ($stmt->execute()) {
             $mensaje = "Propiedad creada exitosamente";
             $tipo_mensaje = "success";
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $update_query = "UPDATE propiedades SET estado = ? WHERE id = ? AND vendedor_id = ?";
         $stmt = $conn->prepare($update_query);
         $stmt->bind_param("sii", $nuevo_estado, $propiedad_id, $vendedor_id);
-        
+
         if ($stmt->execute()) {
             $mensaje = "Estado actualizado exitosamente";
             $tipo_mensaje = "success";
@@ -74,11 +74,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST['eliminar_propiedad'])) {
         $propiedad_id = $_POST['propiedad_id'];
-        
+
         $delete_query = "DELETE FROM propiedades WHERE id = ? AND vendedor_id = ?";
         $stmt = $conn->prepare($delete_query);
         $stmt->bind_param("ii", $propiedad_id, $vendedor_id);
-        
+
         if ($stmt->execute()) {
             $mensaje = "Propiedad eliminada exitosamente";
             $tipo_mensaje = "success";
@@ -113,6 +113,7 @@ $stats = $stats_result->fetch_assoc();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -121,6 +122,7 @@ $stats = $stats_result->fetch_assoc();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/propiedadesvendedor.css">
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -161,14 +163,16 @@ $stats = $stats_result->fetch_assoc();
                         <h2>Mis Propiedades</h2>
                         <p class="text-muted">Gestiona tus propiedades registradas</p>
                     </div>
-                    <button class="btn btn-primary btn-custom" data-bs-toggle="modal" data-bs-target="#crearPropiedadModal">
+                    <button class="btn btn-primary btn-custom" data-bs-toggle="modal"
+                        data-bs-target="#crearPropiedadModal">
                         <i class="bi bi-plus-circle me-2"></i> Agregar Propiedad
                     </button>
                 </div>
 
                 <?php if ($mensaje): ?>
                     <div class="alert alert-<?= $tipo_mensaje ?> alert-dismissible fade show" role="alert">
-                        <i class="bi bi-<?= $tipo_mensaje == 'success' ? 'check-circle' : 'exclamation-triangle' ?> me-2"></i>
+                        <i
+                            class="bi bi-<?= $tipo_mensaje == 'success' ? 'check-circle' : 'exclamation-triangle' ?> me-2"></i>
                         <?= $mensaje ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
@@ -208,14 +212,13 @@ $stats = $stats_result->fetch_assoc();
                         <?php while ($propiedad = $propiedades_result->fetch_assoc()): ?>
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="card property-card position-relative">
-                                    <img src="../img/<?= $propiedad['imagen_destacada'] ?? 'prop-dest1.png' ?>" 
-                                         class="card-img-top property-image" 
-                                         alt="<?= htmlspecialchars($propiedad['titulo']) ?>">
-                                    
+                                    <img src="../img/<?= $propiedad['imagen_destacada'] ?? 'prop-dest1.png' ?>"
+                                        class="card-img-top property-image" alt="<?= htmlspecialchars($propiedad['titulo']) ?>">
+
                                     <span class="status-badge status-<?= $propiedad['estado'] ?>">
                                         <?= ucfirst($propiedad['estado']) ?>
                                     </span>
-                                    
+
                                     <div class="price-badge">
                                         $<?= number_format($propiedad['precio'], 0, ',', '.') ?>
                                         <?= $propiedad['tipo'] == 'alquiler' ? '/mes' : '' ?>
@@ -237,7 +240,7 @@ $stats = $stats_result->fetch_assoc();
                                         </div>
 
                                         <h5 class="card-title"><?= htmlspecialchars($propiedad['titulo']) ?></h5>
-                                        
+
                                         <p class="card-text text-muted small">
                                             <?= htmlspecialchars(substr($propiedad['descripcion_breve'], 0, 100)) ?>...
                                         </p>
@@ -275,49 +278,57 @@ $stats = $stats_result->fetch_assoc();
                                             </small>
                                             <br>
                                             <small class="text-muted">
-                                                <i class="bi bi-calendar"></i> <?= date('d/m/Y', strtotime($propiedad['fecha_creacion'])) ?>
+                                                <i class="bi bi-calendar"></i>
+                                                <?= date('d/m/Y', strtotime($propiedad['fecha_creacion'])) ?>
                                             </small>
                                         </div>
 
                                         <div class="d-flex gap-2 mt-3">
-                                            <a href="../detalle_propiedad.php?id=<?= $propiedad['id'] ?>" 
-                                               class="btn btn-outline-primary btn-sm flex-fill" target="_blank">
+                                            <a href="../detalle_propiedad.php?id=<?= $propiedad['id'] ?>"
+                                                class="btn btn-outline-primary btn-sm flex-fill" target="_blank">
                                                 <i class="bi bi-eye"></i> Ver
                                             </a>
-                                            <a href="editar_propiedad.php?id=<?= $propiedad['id'] ?>" 
-                                               class="btn btn-outline-warning btn-sm flex-fill">
+                                            <a href="editar_propiedad.php?id=<?= $propiedad['id'] ?>"
+                                                class="btn btn-outline-warning btn-sm flex-fill">
                                                 <i class="bi bi-pencil"></i> Editar
                                             </a>
                                             <div class="dropdown flex-fill">
-                                                <button class="btn btn-outline-secondary btn-sm dropdown-toggle w-100" 
-                                                        type="button" data-bs-toggle="dropdown">
+                                                <button class="btn btn-outline-secondary btn-sm dropdown-toggle w-100"
+                                                    type="button" data-bs-toggle="dropdown">
                                                     <i class="bi bi-gear"></i>
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><h6 class="dropdown-header">Cambiar Estado:</h6></li>
+                                                    <li>
+                                                        <h6 class="dropdown-header">Cambiar Estado:</h6>
+                                                    </li>
                                                     <?php
                                                     $estados = ['disponible', 'reservada', 'vendida', 'alquilada', 'inactiva'];
                                                     foreach ($estados as $estado):
                                                         if ($estado !== $propiedad['estado']):
-                                                    ?>
-                                                    <li>
-                                                        <form method="POST" style="display: inline;">
-                                                            <input type="hidden" name="propiedad_id" value="<?= $propiedad['id'] ?>">
-                                                            <input type="hidden" name="nuevo_estado" value="<?= $estado ?>">
-                                                            <button type="submit" name="actualizar_estado" class="dropdown-item">
-                                                                <i class="bi bi-circle-fill me-2 text-<?= $estado == 'disponible' ? 'success' : ($estado == 'reservada' ? 'warning' : ($estado == 'vendida' ? 'danger' : ($estado == 'alquilada' ? 'info' : 'secondary'))) ?>"></i>
-                                                                <?= ucfirst($estado) ?>
-                                                            </button>
-                                                        </form>
-                                                    </li>
-                                                    <?php 
+                                                            ?>
+                                                            <li>
+                                                                <form method="POST" style="display: inline;">
+                                                                    <input type="hidden" name="propiedad_id"
+                                                                        value="<?= $propiedad['id'] ?>">
+                                                                    <input type="hidden" name="nuevo_estado" value="<?= $estado ?>">
+                                                                    <button type="submit" name="actualizar_estado"
+                                                                        class="dropdown-item">
+                                                                        <i
+                                                                            class="bi bi-circle-fill me-2 text-<?= $estado == 'disponible' ? 'success' : ($estado == 'reservada' ? 'warning' : ($estado == 'vendida' ? 'danger' : ($estado == 'alquilada' ? 'info' : 'secondary'))) ?>"></i>
+                                                                        <?= ucfirst($estado) ?>
+                                                                    </button>
+                                                                </form>
+                                                            </li>
+                                                        <?php
                                                         endif;
-                                                    endforeach; 
+                                                    endforeach;
                                                     ?>
-                                                    <li><hr class="dropdown-divider"></li>
                                                     <li>
-                                                        <button class="dropdown-item text-danger" 
-                                                                onclick="confirmarEliminar(<?= $propiedad['id'] ?>, '<?= htmlspecialchars($propiedad['titulo']) ?>')">
+                                                        <hr class="dropdown-divider">
+                                                    </li>
+                                                    <li>
+                                                        <button class="dropdown-item text-danger"
+                                                            onclick="confirmarEliminar(<?= $propiedad['id'] ?>, '<?= htmlspecialchars($propiedad['titulo']) ?>')">
                                                             <i class="bi bi-trash me-2"></i>Eliminar
                                                         </button>
                                                     </li>
@@ -335,7 +346,8 @@ $stats = $stats_result->fetch_assoc();
                                     <i class="bi bi-house-x display-1 text-muted"></i>
                                     <h4 class="mt-3">No tienes propiedades registradas</h4>
                                     <p class="text-muted">Comienza agregando tu primera propiedad</p>
-                                    <button class="btn btn-primary btn-custom" data-bs-toggle="modal" data-bs-target="#crearPropiedadModal">
+                                    <button class="btn btn-primary btn-custom" data-bs-toggle="modal"
+                                        data-bs-target="#crearPropiedadModal">
                                         <i class="bi bi-plus-circle me-2"></i>Agregar Primera Propiedad
                                     </button>
                                 </div>
@@ -476,7 +488,8 @@ $stats = $stats_result->fetch_assoc();
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2 text-warning"></i>Confirmar Eliminación</h5>
+                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2 text-warning"></i>Confirmar
+                        Eliminación</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -489,7 +502,8 @@ $stats = $stats_result->fetch_assoc();
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <form method="POST" style="display: inline;">
                         <input type="hidden" id="eliminarId" name="propiedad_id">
-                        <button type="submit" name="eliminar_propiedad" class="btn btn-danger">Eliminar Propiedad</button>
+                        <button type="submit" name="eliminar_propiedad" class="btn btn-danger">Eliminar
+                            Propiedad</button>
                     </form>
                 </div>
             </div>
@@ -501,13 +515,13 @@ $stats = $stats_result->fetch_assoc();
         function confirmarEliminar(id, nombre) {
             document.getElementById('eliminarId').value = id;
             document.getElementById('propiedadNombre').textContent = nombre;
-            
+
             const modal = new bootstrap.Modal(document.getElementById('eliminarModal'));
             modal.show();
         }
 
         // Auto-cerrar alertas después de 5 segundos
-        setTimeout(function() {
+        setTimeout(function () {
             const alert = document.querySelector('.alert-dismissible');
             if (alert) {
                 const bsAlert = new bootstrap.Alert(alert);
@@ -516,4 +530,5 @@ $stats = $stats_result->fetch_assoc();
         }, 5000);
     </script>
 </body>
+
 </html>

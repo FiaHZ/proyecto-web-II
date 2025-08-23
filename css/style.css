@@ -120,13 +120,14 @@
 .nav-links .fa-circle-user:hover{
   transform: scale(1.1);
 }
-.nav-links .bi-box-arrow-in-right {
+.nav-links a i.bi-box-arrow-right {
   display: inline-block;
   font-size: 37px;
   color: white;
-  transition: 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
-.nav-links .bi-box-arrow-in-right:hover{
+
+.nav-links a:hover i.bi-box-arrow-right {
   transform: scale(1.1);
 }
 
@@ -477,6 +478,16 @@ dl, ol, ul{
   color: #150d3e;
   transform: scale(1.05);
 }
+.card-content p,
+.card-content-venta p,
+.card-content-alquiler p {
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* número de líneas visibles */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /*----FOOTER---*/
 .footer {
   background-color: #f5b800;

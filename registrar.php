@@ -41,11 +41,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Registrar</title>
     <link rel="stylesheet" href="css/registrar.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="login-box">
         <div class="login-header">
@@ -54,28 +57,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <form method="POST" action="">
             <div class="input-box">
-                <input type="text" name="nombre" class="input-field" placeholder="Nombre completo" autocomplete="off" required>
-            </div>
-            
-            <div class="input-box">
-                <input type="text" name="usuario" class="input-field" placeholder="Nombre de usuario" autocomplete="off" required>
-            </div>
-            
-            <div class="input-box">
-                <input type="text" name="telefono" class="input-field" placeholder="Teléfono" autocomplete="off" required>
+                <input type="text" name="nombre" class="input-field" placeholder="Nombre completo" autocomplete="off"
+                    required>
             </div>
 
             <div class="input-box">
-                <input type="email" name="correo" class="input-field" placeholder="Correo electrónico" autocomplete="off" required>
+                <input type="text" name="usuario" class="input-field" placeholder="Nombre de usuario" autocomplete="off"
+                    required>
             </div>
 
             <div class="input-box">
-                <input type="password" name="contrasena" class="input-field" placeholder="Contraseña" id="password" required>
+                <input type="text" name="telefono" class="input-field" placeholder="Teléfono" autocomplete="off"
+                    required>
+            </div>
+
+            <div class="input-box">
+                <input type="email" name="correo" class="input-field" placeholder="Correo electrónico"
+                    autocomplete="off" required>
+            </div>
+
+            <div class="input-box">
+                <input type="password" name="contrasena" class="input-field" placeholder="Contraseña" id="password"
+                    required>
                 <i class="bi bi-eye-slash toggle-password" id="togglePassword"></i>
             </div>
 
             <div class="input-box">
-                <input type="password" name="confirmar" class="input-field" placeholder="Confirmar contraseña" id="confirmPassword" required>
+                <input type="password" name="confirmar" class="input-field" placeholder="Confirmar contraseña"
+                    id="confirmPassword" required>
                 <i class="bi bi-eye-slash toggle-password" id="toggleConfirmPassword"></i>
             </div>
 
@@ -116,4 +125,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         togglePasswordVisibility("confirmPassword", "toggleConfirmPassword");
     </script>
 </body>
+
 </html>
