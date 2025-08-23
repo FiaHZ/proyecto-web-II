@@ -74,9 +74,6 @@ $stats = $stats_result->fetch_assoc();
                             <p class="text-muted mb-0">Resumen general del sistema</p>
                         </div>
                         <div>
-                            <button class="btn btn-primary btn-custom" onclick="location.href='../index.php'">
-                                <i class="bi bi-house me-2"></i> Ver Sitio Web
-                            </button>
                         </div>
                     </div>
                 </div>
