@@ -328,10 +328,7 @@ $stats = $stats_result->fetch_assoc();
                                 <br>Agregar Propiedad
                             </a>
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="../index.php" class="btn btn-outline-info btn-custom w-100">
-                                <i class="bi bi-eye me-2"></i>
-                                <br>Ver Sitio Web
+                       
                             </a>
                         </div>
                         <div class="col-md-3 mb-3">
