@@ -10,12 +10,13 @@
 body {
   background-color: #f8f9fa;
 }
-.text-muted{
-    color: black !important;
+
+.text-muted {
+  color: black !important;
 }
 
 .sidebar {
-   background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   min-height: 100vh;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -130,24 +131,125 @@ body {
   font-weight: 600;
 }
 
+/* ESTILOS MEJORADOS PARA IMÁGENES DE PREVIEW */
 .preview-image {
-  max-width: 50px;
-  max-height: 40px;
+  max-width: 120px;
+  max-height: 80px;
+  min-width: 80px;
+  min-height: 50px;
   object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
+.preview-image:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+  border-color: var(--primary-color);
+}
+
+/* Contenedor para imágenes de preview más grandes */
+.image-preview-container {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.image-preview-large {
+  max-width: 200px;
+  max-height: 150px;
+  min-width: 120px;
+  min-height: 80px;
+  object-fit: cover;
+  border-radius: 15px;
+  border: 3px solid #ffffff;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.image-preview-large:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para iconos pequeños (logos) */
+.icon-preview {
+  max-width: 80px;
+  max-height: 80px;
+  min-width: 60px;
+  min-height: 60px;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  background: white;
+  padding: 5px;
+  transition: all 0.3s ease;
+}
+
+.icon-preview:hover {
+  transform: scale(1.15);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Estilos para el texto de información actual */
+.current-image-info {
+  background: #e8f4fd;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 8px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.current-image-info small {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+/* Mejorar el selector de colores */
 .color-preview {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
-  margin-left: 8px;
-  border: 2px solid white;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  margin-left: 10px;
+  border: 3px solid white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   vertical-align: middle;
+  transition: all 0.3s ease;
+}
+
+.color-preview:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Mejorar inputs de archivo */
+.file-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.form-control[type="file"] {
+  background: linear-gradient(145deg, #ffffff, #f0f2f5);
+  border: 2px dashed var(--primary-color);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.form-control[type="file"]:hover {
+  border-color: var(--secondary-color);
+  background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+  transform: translateY(-2px);
 }
 
 .form-control,
@@ -160,11 +262,45 @@ body {
 .form-control:focus,
 .form-select:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+  box-shadow: 0 0 0 0.2rem rgba(34, 64, 197, 0.15);
 }
 
 .alert {
   border-radius: 10px;
   border: none;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Animaciones adicionales para mejorar la experiencia */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.config-section {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive para imágenes en móviles */
+@media (max-width: 768px) {
+  .preview-image {
+    max-width: 100px;
+    max-height: 70px;
+  }
+  
+  .image-preview-large {
+    max-width: 150px;
+    max-height: 120px;
+  }
+  
+  .icon-preview {
+    max-width: 60px;
+    max-height: 60px;
+  }
 }

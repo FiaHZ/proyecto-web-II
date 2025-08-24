@@ -135,9 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <h2>Personalizar Página Web</h2>
                         <p class="text-muted">Configure la apariencia y contenido del sitio web</p>
                     </div>
-                    <button class="btn btn-outline-primary btn-custom" onclick="location.href='../index.php'">
-                        <i class="bi bi-eye me-2"></i> Vista Previa
-                    </button>
+                    
                 </div>
 
                 <?php if ($mensaje): ?>

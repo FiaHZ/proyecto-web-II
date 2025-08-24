@@ -334,14 +334,6 @@ $stats = $stats_result->fetch_assoc();
                                         $<?= number_format($propiedad['precio'], 0, ',', '.') ?>
                                     </span>
                                 </div>
-                                
-                                <!-- Favoritos -->
-                                <?php if (isset($_SESSION['usuario_id'])): ?>
-                                    <button class="btn btn-outline-light btn-sm position-absolute bottom-0 end-0 m-2" 
-                                            onclick="toggleFavorito(<?= $propiedad['id'] ?>)">
-                                        <i class="bi bi-heart"></i>
-                                    </button>
-                                <?php endif; ?>
                             </div>
                             
                             <div class="card-body d-flex flex-column">
@@ -409,28 +401,12 @@ $stats = $stats_result->fetch_assoc();
                                     </div>
                                 </div>
                                 
-                                <!-- Botones de acción -->
+                                <!-- Botón Ver Detalles únicamente -->
                                 <div class="mt-auto">
-                                    <div class="d-flex gap-2 mb-2">
-                                        <a href="detalle_propiedad.php?id=<?= $propiedad['id'] ?>" 
-                                           class="btn btn-success flex-fill">
-                                            <i class="bi bi-eye"></i> Ver Detalles
-                                        </a>
-                                    </div>
-                                    <div class="d-flex gap-1">
-                                        <a href="tel:<?= $propiedad['vendedor_telefono'] ?>" 
-                                           class="btn btn-outline-success btn-sm flex-fill" title="Llamar">
-                                            <i class="bi bi-telephone"></i>
-                                        </a>
-                                        <a href="https://wa.me/506<?= str_replace(['-', ' '], '', $propiedad['vendedor_telefono']) ?>?text=Hola, me interesa la propiedad: <?= urlencode($propiedad['titulo']) ?>" 
-                                           class="btn btn-outline-success btn-sm flex-fill" target="_blank" title="WhatsApp">
-                                            <i class="bi bi-whatsapp"></i>
-                                        </a>
-                                        <a href="mailto:<?= $propiedad['vendedor_correo'] ?>?subject=Consulta sobre <?= urlencode($propiedad['titulo']) ?>" 
-                                           class="btn btn-outline-success btn-sm flex-fill" title="Email">
-                                            <i class="bi bi-envelope"></i>
-                                        </a>
-                                    </div>
+                                    <a href="detalle_propiedad.php?id=<?= $propiedad['id'] ?>" 
+                                       class="btn btn-success w-100">
+                                        <i class="bi bi-eye"></i> Ver Detalles
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -506,23 +482,6 @@ $stats = $stats_result->fetch_assoc();
             </nav>
         <?php endif; ?>
 
-        <!-- Llamada a la acción -->
-        <div class="card bg-success text-white mt-5">
-            <div class="card-body text-center">
-                <h4>¿No encuentras lo que buscas?</h4>
-                <p class="mb-3">Nuestros agentes especializados pueden ayudarte a encontrar la propiedad perfecta</p>
-                <div class="d-flex justify-content-center gap-3">
-                    <a href="tel:<?= $config['telefono'] ?? '2222-3333' ?>" class="btn btn-light">
-                        <i class="bi bi-telephone"></i> Llamar Ahora
-                    </a>
-                    <a href="index.php#contacto" class="btn btn-outline-light">
-                        <i class="bi bi-envelope"></i> Contactar
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer class="footer" id="contacto">
         <div class="footer-content">
@@ -596,11 +555,6 @@ $stats = $stats_result->fetch_assoc();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Función para favoritos (puedes implementarla después)
-        function toggleFavorito(propiedadId) {
-            alert('Funcionalidad de favoritos en desarrollo');
-        }
-
         // Efecto de hover en las cards
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.property-card');

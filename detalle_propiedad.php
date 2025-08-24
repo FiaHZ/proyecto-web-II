@@ -39,35 +39,6 @@ $stmt_img->bind_param("i", $propiedad_id);
 $stmt_img->execute();
 $imagenes_result = $stmt_img->get_result();
 
-// Procesar formulario de contacto/reserva
-$mensaje = "";
-$tipo_mensaje = "";
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['enviar_reserva'])) {
-    if (isset($_SESSION['usuario_id'])) {
-        $cliente_id = $_SESSION['usuario_id'];
-        $tipo_interes = $_POST['tipo_interes'];
-        $mensaje_contacto = $_POST['mensaje'];
-        $telefono_contacto = $_POST['telefono_contacto'];
-        $fecha_preferida = !empty($_POST['fecha_preferida']) ? $_POST['fecha_preferida'] : null;
-
-        $insert_reserva = "INSERT INTO reservas (propiedad_id, cliente_id, tipo_interes, mensaje, telefono_contacto, fecha_preferida) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt_reserva = $conn->prepare($insert_reserva);
-        $stmt_reserva->bind_param("iissss", $propiedad_id, $cliente_id, $tipo_interes, $mensaje_contacto, $telefono_contacto, $fecha_preferida);
-
-        if ($stmt_reserva->execute()) {
-            $mensaje = "¡Tu consulta ha sido enviada exitosamente! El vendedor se pondrá en contacto contigo pronto.";
-            $tipo_mensaje = "success";
-        } else {
-            $mensaje = "Error al enviar la consulta. Por favor, inténtalo de nuevo.";
-            $tipo_mensaje = "danger";
-        }
-    } else {
-        $mensaje = "Debes iniciar sesión para contactar al vendedor.";
-        $tipo_mensaje = "warning";
-    }
-}
-
 // Obtener propiedades relacionadas del mismo vendedor
 $relacionadas_query = "SELECT * FROM vista_propiedades_completa WHERE vendedor_nombre = ? AND id != ? AND estado = 'disponible' ORDER BY fecha_creacion DESC LIMIT 3";
 $stmt_rel = $conn->prepare($relacionadas_query);
@@ -130,22 +101,6 @@ $relacionadas_result = $stmt_rel->get_result();
     </header>
 
     <div class="container mt-4">
-        <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.php">Inicio</a></li>
-                <li class="breadcrumb-item"><a href="<?= $propiedad['tipo'] == 'venta' ? 'ventas.php' : 'alquileres.php' ?>"><?= ucfirst($propiedad['tipo']) ?></a></li>
-                <li class="breadcrumb-item active"><?= htmlspecialchars($propiedad['titulo']) ?></li>
-            </ol>
-        </nav>
-
-        <?php if ($mensaje): ?>
-            <div class="alert alert-<?= $tipo_mensaje ?> alert-dismissible fade show" role="alert">
-                <?= $mensaje ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        <?php endif; ?>
-
         <div class="row">
             <!-- Contenido Principal -->
             <div class="col-lg-8">
@@ -175,11 +130,6 @@ $relacionadas_result = $stmt_rel->get_result();
                             $<?= number_format($propiedad['precio'], 0, ',', '.') ?>
                             <?= $propiedad['tipo'] == 'alquiler' ? '/mes' : '' ?>
                         </h3>
-                        <?php if (isset($_SESSION['usuario_id'])): ?>
-                            <button class="btn btn-outline-danger btn-sm mt-2" onclick="toggleFavorito(<?= $propiedad['id'] ?>)">
-                                <i class="bi bi-heart"></i> Favorito
-                            </button>
-                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -303,9 +253,8 @@ $relacionadas_result = $stmt_rel->get_result();
                 <?php endif; ?>
             </div>
 
-            <!-- Sidebar -->
+            <!-- Sidebar - Solo información del vendedor -->
             <div class="col-lg-4">
-                <!-- Información del Vendedor -->
                 <div class="card contact-card mb-4">
                     <div class="card-header">
                         <h5 class="mb-0">Información del Vendedor</h5>
@@ -321,73 +270,14 @@ $relacionadas_result = $stmt_rel->get_result();
                         
                         <div class="mb-2">
                             <i class="bi bi-telephone text-success me-2"></i>
-                            <a href="tel:<?= $propiedad['vendedor_telefono'] ?>" class="text-decoration-none">
-                                <?= htmlspecialchars($propiedad['vendedor_telefono']) ?>
-                            </a>
+                            <span><?= htmlspecialchars($propiedad['vendedor_telefono']) ?></span>
                         </div>
                         
                         <div class="mb-3">
                             <i class="bi bi-envelope text-primary me-2"></i>
-                            <a href="mailto:<?= $propiedad['vendedor_correo'] ?>" class="text-decoration-none">
-                                <?= htmlspecialchars($propiedad['vendedor_correo']) ?>
-                            </a>
+                            <span><?= htmlspecialchars($propiedad['vendedor_correo']) ?></span>
                         </div>
-
-                        <!-- Formulario de Contacto -->
-                        <?php if (isset($_SESSION['usuario_id'])): ?>
-                            <form method="POST" class="mt-3">
-                                <div class="mb-3">
-                                    <label class="form-label">Tipo de Interés</label>
-                                    <select class="form-select" name="tipo_interes" required>
-                                        <option value="">Seleccionar...</option>
-                                        <option value="<?= $propiedad['tipo'] ?>"><?= ucfirst($propiedad['tipo']) ?></option>
-                                        <option value="informacion">Solo información</option>
-                                    </select>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Tu teléfono</label>
-                                    <input type="tel" class="form-control" name="telefono_contacto" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Fecha preferida para visita (opcional)</label>
-                                    <input type="date" class="form-control" name="fecha_preferida" min="<?= date('Y-m-d') ?>">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Mensaje</label>
-                                    <textarea class="form-control" name="mensaje" rows="4" required 
-                                              placeholder="Hola, estoy interesado en esta propiedad..."></textarea>
-                                </div>
-
-                                <button type="submit" name="enviar_reserva" class="btn btn-primary w-100">
-                                    <i class="bi bi-envelope"></i> Contactar Vendedor
-                                </button>
-                            </form>
-                        <?php else: ?>
-                            <div class="text-center">
-                                <p class="text-muted">Inicia sesión para contactar al vendedor</p>
-                                <a href="login.php" class="btn btn-primary w-100">Iniciar Sesión</a>
-                            </div>
-                        <?php endif; ?>
                     </div>
-                </div>
-
-                <!-- Botones de Acción Rápida -->
-                <div class="d-grid gap-2">
-                    <a href="tel:<?= $propiedad['vendedor_telefono'] ?>" class="btn btn-success">
-                        <i class="bi bi-telephone"></i> Llamar Ahora
-                    </a>
-                    <a href="https://wa.me/506<?= str_replace(['-', ' '], '', $propiedad['vendedor_telefono']) ?>?text=Hola, estoy interesado en la propiedad: <?= urlencode($propiedad['titulo']) ?>" 
-                       class="btn btn-success" target="_blank">
-                        <i class="bi bi-whatsapp"></i> WhatsApp
-                    </a>
-                    <?php if ($propiedad['mapa']): ?>
-                        <a href="<?= htmlspecialchars($propiedad['mapa']) ?>" target="_blank" class="btn btn-info">
-                            <i class="bi bi-map"></i> Ver Ubicación
-                        </a>
-                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -418,12 +308,6 @@ $relacionadas_result = $stmt_rel->get_result();
                 modalImage.src = imageSrc;
             });
         });
-
-        // Función para favoritos (puedes implementarla después)
-        function toggleFavorito(propiedadId) {
-            // Aquí puedes implementar la funcionalidad de favoritos
-            alert('Funcionalidad de favoritos en desarrollo');
-        }
     </script>
 </body>
 </html>

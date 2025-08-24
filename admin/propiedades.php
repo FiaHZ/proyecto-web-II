@@ -165,9 +165,7 @@ $vendedores_result = $conn->query($vendedores_query);
                         <h2>Gestión de Propiedades</h2>
                         <p class="text-muted">Administra todas las propiedades del sistema</p>
                     </div>
-                    <a href="../index.php" class="btn btn-outline-primary btn-custom">
-                        <i class="bi bi-eye me-2"></i> Ver Sitio Web
-                    </a>
+                    
                 </div>
 
                 <?php if ($mensaje): ?>

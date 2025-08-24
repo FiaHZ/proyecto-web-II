@@ -349,14 +349,6 @@ $stats = $stats_result->fetch_assoc();
                                         $<?= number_format($propiedad['precio'], 0, ',', '.') ?>/mes
                                     </span>
                                 </div>
-                                
-                                <!-- Favoritos -->
-                                <?php if (isset($_SESSION['usuario_id'])): ?>
-                                    <button class="btn btn-outline-light btn-sm position-absolute bottom-0 end-0 m-2" 
-                                            onclick="toggleFavorito(<?= $propiedad['id'] ?>)">
-                                        <i class="bi bi-heart"></i>
-                                    </button>
-                                <?php endif; ?>
                             </div>
                             
                             <div class="card-body d-flex flex-column">
@@ -424,28 +416,12 @@ $stats = $stats_result->fetch_assoc();
                                     </div>
                                 </div>
                                 
-                                <!-- Botones de acción -->
+                                <!-- Botón Ver Detalles únicamente -->
                                 <div class="mt-auto">
-                                    <div class="d-flex gap-2 mb-2">
-                                        <a href="detalle_propiedad.php?id=<?= $propiedad['id'] ?>" 
-                                           class="btn btn-info flex-fill text-white">
-                                            <i class="bi bi-eye"></i> Ver Detalles
-                                        </a>
-                                    </div>
-                                    <div class="d-flex gap-1">
-                                        <a href="tel:<?= $propiedad['vendedor_telefono'] ?>" 
-                                           class="btn btn-outline-info btn-sm flex-fill" title="Llamar">
-                                            <i class="bi bi-telephone"></i>
-                                        </a>
-                                        <a href="https://wa.me/506<?= str_replace(['-', ' '], '', $propiedad['vendedor_telefono']) ?>?text=Hola, me interesa el alquiler: <?= urlencode($propiedad['titulo']) ?>" 
-                                           class="btn btn-outline-success btn-sm flex-fill" target="_blank" title="WhatsApp">
-                                            <i class="bi bi-whatsapp"></i>
-                                        </a>
-                                        <a href="mailto:<?= $propiedad['vendedor_correo'] ?>?subject=Consulta sobre alquiler: <?= urlencode($propiedad['titulo']) ?>" 
-                                           class="btn btn-outline-info btn-sm flex-fill" title="Email">
-                                            <i class="bi bi-envelope"></i>
-                                        </a>
-                                    </div>
+                                    <a href="detalle_propiedad.php?id=<?= $propiedad['id'] ?>" 
+                                       class="btn btn-info w-100 text-white">
+                                        <i class="bi bi-eye"></i> Ver Detalles
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -521,40 +497,6 @@ $stats = $stats_result->fetch_assoc();
             </nav>
         <?php endif; ?>
 
-        <!-- Información útil para inquilinos -->
-        <div class="row mt-5">
-            <div class="col-md-4">
-                <div class="card bg-light">
-                    <div class="card-body text-center">
-                        <i class="bi bi-shield-check display-4 text-info mb-3"></i>
-                        <h5>Propiedades Verificadas</h5>
-                        <p class="card-text small">Todas nuestras propiedades pasan por un proceso de verificación riguroso</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card bg-light">
-                    <div class="card-body text-center">
-                        <i class="bi bi-headset display-4 text-info mb-3"></i>
-                        <h5>Soporte 24/7</h5>
-                        <p class="card-text small">Nuestro equipo está disponible para ayudarte en cualquier momento</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card bg-light">
-                    <div class="card-body text-center">
-                        <i class="bi bi-hand-thumbs-up display-4 text-info mb-3"></i>
-                        <h5>Sin Comisiones Ocultas</h5>
-                        <p class="card-text small">Precios transparentes y sin sorpresas en el proceso de alquiler</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer class="footer" id="contacto">
         <div class="footer-content">
@@ -628,11 +570,6 @@ $stats = $stats_result->fetch_assoc();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Función para favoritos (puedes implementarla después)
-        function toggleFavorito(propiedadId) {
-            alert('Funcionalidad de favoritos en desarrollo');
-        }
-
         // Efecto de hover en las cards
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.property-card');
