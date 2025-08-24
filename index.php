@@ -2,6 +2,53 @@
 session_start();
 require_once "config/database.php";
 
+$config_query = "SELECT clave, valor FROM configuraciones";
+$result = $conn->query($config_query);
+$configuraciones = [];
+while ($row = $result->fetch_assoc()) {
+    $configuraciones[$row['clave']] = $row['valor'];
+}
+
+// Definir colores según la opción guardada
+$color_tema = $configuraciones['color_tema'] ?? 'azul';
+
+$colores = [
+    'azul'     => [
+        'fondo_principal' => '#02050e',
+        'color_primario' => '#3498db',
+        'color_secundario' => '#150d3e',
+        'color_accent' => '#efb820',
+        'texto_claro' => '#ffffff',
+        'texto_oscuro' => '#333333'
+    ],
+    'amarillo' => [
+        'fondo_principal' => '#02050e',
+        'color_primario' => '#f1c40f',
+        'color_secundario' => '#f39c12',
+        'color_accent' => '#e67e22',
+        'texto_claro' => '#ffffff',
+        'texto_oscuro' => '#2c3e50'
+    ],
+    'gris'     => [
+        'fondo_principal' => '#2c3e50',
+        'color_primario' => '#95a5a6',
+        'color_secundario' => '#34495e',
+        'color_accent' => '#e74c3c',
+        'texto_claro' => '#ffffff',
+        'texto_oscuro' => '#2c3e50'
+    ],
+    'blanco'   => [
+        'fondo_principal' => '#ecf0f1',
+        'color_primario' => '#7f8c8d',
+        'color_secundario' => '#bdc3c7',
+        'color_accent' => '#3498db',
+        'texto_claro' => '#2c3e50',
+        'texto_oscuro' => '#2c3e50'
+    ]
+];
+
+$tema_actual = $colores[$color_tema];
+
 // Obtener configuraciones
 $config_query = "SELECT clave, valor FROM configuraciones";
 $config_result = $conn->query($config_query);
@@ -31,12 +78,178 @@ $alquiler_result = $conn->query($alquiler_query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Solutions Real State</title>
 
-    <link rel="stylesheet" href="proyecto-web-II/css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         integrity="sha512-pap3x...tu-integrity-hash..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Estilos dinámicos basados en el tema seleccionado -->
+    <style>
+        :root {
+            --color-fondo-principal: <?= $tema_actual['fondo_principal'] ?>;
+            --color-primario: <?= $tema_actual['color_primario'] ?>;
+            --color-secundario: <?= $tema_actual['color_secundario'] ?>;
+            --color-accent: <?= $tema_actual['color_accent'] ?>;
+            --texto-claro: <?= $tema_actual['texto_claro'] ?>;
+            --texto-oscuro: <?= $tema_actual['texto_oscuro'] ?>;
+        }
+
+        /* Aplicar colores dinámicos */
+        .header {
+            background-color: var(--color-fondo-principal) !important;
+        }
+
+        .header .nav-links a {
+            color: var(--color-accent) !important;
+        }
+
+        .header .nav-links a:hover {
+            color: var(--texto-claro) !important;
+        }
+
+        .search-bar input {
+            border-color: var(--color-accent) !important;
+        }
+
+        .search-bar button {
+            background-color: var(--color-accent) !important;
+            border-color: var(--color-accent) !important;
+            color: var(--color-fondo-principal) !important;
+        }
+
+        .search-bar button:hover {
+            background-color: var(--color-primario) !important;
+        }
+
+        /* Secciones principales */
+        .propiedad {
+            background-color: var(--color-secundario) !important;
+        }
+
+        .propiedad h1 {
+            color: var(--texto-claro) !important;
+        }
+
+        .card-propiedad {
+            background-color: var(--color-secundario) !important;
+        }
+
+        .card-content h3 {
+            color: var(--texto-claro) !important;
+        }
+
+        .card-content p {
+            color: var(--texto-claro) !important;
+        }
+
+        .card-content .precio-prop {
+            color: var(--color-accent) !important;
+        }
+
+        .btn-vermas {
+            border-color: var(--color-accent) !important;
+            color: var(--texto-claro) !important;
+        }
+
+        .btn-vermas:hover {
+            background-color: var(--texto-claro) !important;
+            color: var(--color-secundario) !important;
+        }
+
+        /* Sección de ventas */
+        .propiedad-venta {
+            background-color: <?= $color_tema == 'blanco' ? '#f8f9fa' : '#e4e4e4' ?> !important;
+        }
+
+        .propiedad-venta h1 {
+            color: var(--color-secundario) !important;
+        }
+
+        .card-propiedad-venta {
+            background-color: <?= $color_tema == 'blanco' ? '#ffffff' : '#e4e4e4' ?> !important;
+        }
+
+        .card-content-venta h3 {
+            color: var(--texto-oscuro) !important;
+        }
+
+        .card-content-venta p {
+            color: var(--texto-oscuro) !important;
+        }
+
+        .card-content-venta .precio-prop-venta {
+            color: var(--color-secundario) !important;
+        }
+
+        .btn-vermas-venta {
+            border-color: var(--color-accent) !important;
+            color: var(--color-secundario) !important;
+        }
+
+        .btn-vermas-venta:hover {
+            background-color: var(--color-secundario) !important;
+            color: var(--texto-claro) !important;
+        }
+
+        /* Sección de alquiler */
+        .propiedad-alquiler {
+            background-color: var(--color-secundario) !important;
+        }
+
+        .propiedad-alquiler h1 {
+            color: var(--texto-claro) !important;
+        }
+
+        .card-propiedad-alquiler {
+            background-color: var(--color-secundario) !important;
+        }
+
+        .card-content-alquiler h3 {
+            color: var(--texto-claro) !important;
+        }
+
+        .card-content-alquiler p {
+            color: var(--texto-claro) !important;
+        }
+
+        .card-content-alquiler .precio-prop-alquiler {
+            color: var(--color-accent) !important;
+        }
+
+        .btn-vermas-alquiler {
+            border-color: var(--color-accent) !important;
+            color: var(--texto-claro) !important;
+        }
+
+        .btn-vermas-alquiler:hover {
+            background-color: var(--texto-claro) !important;
+            color: var(--color-secundario) !important;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-accent) !important;
+        }
+
+        .footer-bottom {
+            background-color: var(--color-secundario) !important;
+            color: var(--texto-claro) !important;
+        }
+
+        .form-submit {
+            background-color: var(--color-secundario) !important;
+        }
+
+        .form-submit:hover {
+            background-color: var(--color-primario) !important;
+        }
+
+        /* Quienes somos */
+        .quienes-somos h1 {
+            color: var(--color-secundario) !important;
+        }
+    </style>
 </head>
 
 <body>
