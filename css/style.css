@@ -14,7 +14,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 160px;
+  height: 220px;
   padding: 5px 10%;
 }
 .header .logo {
@@ -23,6 +23,7 @@
 .header .logo img {
   height: 125px;
   width: auto;
+  margin-bottom: 35px;
   transition: all 0.3s;
   margin-left: 35px;
 }
@@ -52,9 +53,6 @@
   color: #e4e4e4;
 }
 .social-icons-logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin-top: -25px;
   margin-right: 25px;
 }
@@ -577,7 +575,7 @@ dl, ol, ul{
   transition: 0.3s ease;
 }
 .social-icons a i {
-  font-size: 1.5em;
+  font-size: 1.6em;
   color: black;
   opacity: 0.9;
   transition: 0.3s ease;
